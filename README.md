@@ -13,4 +13,5 @@ The folder `routes` has a file `api.js` which is initialised with ExpressJS for 
 ## Database (MongoDB)
 The database is hosted on the cloud using MongoDB Cloud Databse utility.\
 The file `.env` has placeholder for username and password which has to be updated with your respective username and password to gain access to the cloud database.\
-The backend as of now has the ability to fetch or make changes to a `foodlist` model which can be seen in `/models`
+The backend as of now has the ability to fetch or make changes to a `foodlist` model which can be seen in `/models`.\
+**Important: Your IP Address has to be added to the database Access List in order to connect to the Database** 

@@ -8,6 +8,35 @@ class CustomerSignUp extends React.Component{
         this.styling={backgroundColor:'#fb8c00',animation:'spin 10s ease infinite'}
         this.stylingH={fontFamily:'Cookie'}
         this.stylingImg={objectFit:'none',objectPosition:'center',maxHeight:'200px',width:'100%'}
+        this.googleSignUp=React.createRef()
+    }
+    componentDidMount(){
+        let widthbtn=this.googleSignUp.current.offsetWidth;
+        function handleCredentialResponse(response) {
+            console.log("Encoded JWT ID token: " + response.credential);
+            console.log(response);
+          }
+          function handleUserDataResponse(Credential) {
+            console.log(Credential);
+        
+          }
+          window.onload = function () {
+            google.accounts.id.initialize({
+              client_id: "146665827801-tplvm4bfgnoi45bn2o3u9qs6pdkmmohq.apps.googleusercontent.com",
+              callback: handleCredentialResponse,
+              native_callback:handleUserDataResponse
+            });
+            google.accounts.id.renderButton(
+              document.getElementById("buttonDiv"),
+              { theme: "outline", size: "large",text:"signup_with",shape:"pill",width:widthbtn}  // customization attributes
+            );
+            google.accounts.id.prompt(); // also display the One Tap dialog
+          }
+    }
+    onSignIn=()=>{
+            let cred={id:'..',password:'..'};
+            google.accounts.id.storeCredential(cred);
+            console.log(cred);
     }
     render(){
         return(<div className='container-fluid mt-2 pt-5 pb-2 w-100 px-0' style={this.styling}>
@@ -18,12 +47,14 @@ class CustomerSignUp extends React.Component{
                  100% { background-position:0% 50%; }
             }
         `}</style>
+            
             <div className='mb-2 pb-2'>
                 <h1 className='pt-5' style={this.stylingH}>Few Steps to avail your food at your doorstep</h1>
             </div>
             <div><img src='https://www.cypressgreen.in/blog/wp-content/uploads/2021/03/food.jpg' style={this.stylingImg} className='img-fluid'/></div>
             <h1 className='my-4' style={this.stylingH}>Share Some Info About You</h1>
-            <div className='container px-0 shadow-lg rounded-4' >
+            <div className='container px-0 shadow-lg rounded-4'  >
+                
                 <form className='rounded-4 shadow-lg py-2' style={{backgroundColor:'#ffd149'}}>
                     <figcaption className='mx-2 my-2 px-2 py-2'><h2>Sign Up</h2></figcaption>
                     <div className='form-floating mb-3 mx-4'>
@@ -52,9 +83,13 @@ class CustomerSignUp extends React.Component{
                     </div>
                     
                     <hr className='hr mx-4' />
+                    <div className='mx-5 mb-3 d-grid' ref={this.googleSignUp}>
+                    <div id="buttonDiv" className='m-auto'></div>
+                    </div>
+                
                     
                     <div className='d-grid px-4'>
-                    <button type='submit' className='btn btn-outline-secondary'><img style={{height:'25px',width:'25px'}}src='https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1200px-Google_%22G%22_Logo.svg.png' className='img-fluid'/>        Continue with Google</button>
+                    <button type='submit' onSubmit={this.onSignIn} className='btn btn-outline-secondary'><img style={{height:'25px',width:'25px'}}src='https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1200px-Google_%22G%22_Logo.svg.png' className='img-fluid'/>        Continue with Google</button>
                     </div>
                     <hr className='hr mx-4' />
                     <div className='mx-2 py-2'>

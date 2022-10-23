@@ -1,18 +1,27 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import {BrowserRouter, Routes,Route} from 'react-router-dom';
 import $ from 'jquery';
 import Popper from 'popper.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import './index.css';
 import App from './App';
+import './components/CustomerSignUp';
+import CustomerSignUp from './components/CustomerSignUp.js';
 import reportWebVitals from './reportWebVitals';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+  <BrowserRouter>
+  <Routes>
+    <Route path='/' element={<App/>}>
+      <Route path='customerSignUp' element={<CustomerSignUp/>}/>
+    </Route>
+  </Routes>
+  </BrowserRouter>
   </React.StrictMode>
 );
 

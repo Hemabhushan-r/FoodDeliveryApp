@@ -99,7 +99,7 @@ class CustomerSignUp extends React.Component{
                     </div>
                 </form>
             </div>
-            <div className='container-fluid  mt-4 mb-2 py-4 bg-light'>
+            <div className='container-fluid  mt-4 mb-2 py-4'style={{backgroundColor:'#ef6c00'}}>
                 <div className='container '>
                 <div className='row'>
                     <div className='col-lg-3 mb-3'>

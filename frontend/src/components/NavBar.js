@@ -16,13 +16,13 @@ class Navbar extends React.Component{
             <div className='navbar-collapse collapse' id='navbarSupportedContent'>
                 <ul className='navbar-nav m-auto'>
                     <li className='nav-item active'>
-                        <a className='nav-link' href='#' >Shop</a>
+                        <a className='nav-link' href='#' ><i className='bi bi-basket3' style={{fontSize:'1.5em'}}></i>  Shop</a>
                     </li>
                     <li className='nav-item active'>
-                        <a className='nav-link' href='#' >Location</a>
+                        <a className='nav-link' href='#' ><i className='bi bi-geo-alt' style={{fontSize:'1.5em'}}></i>  Location</a>
                     </li>
                     <li className='nav-item active'>
-                        <Link to={'/addRestaurant'} className='nav-link' href='#' >Add Restaurant</Link>
+                        <Link to={'/addRestaurant'} className='nav-link' href='#' ><i className='bi bi-shop' style={{fontSize:'1.5em'}}></i>  Add Restaurant</Link>
                     </li>
                 </ul>
                 <button className='btn my-2 my-sm-0 m-1'>Log in</button>

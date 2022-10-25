@@ -20,6 +20,8 @@ root.render(
   <Routes>
     <Route path='/' element={<App/>}>
       <Route path='customerSignUp' element={<CustomerSignUp/>}/>
+      <Route path='home' />
+      <Route path='orderonline' />
     </Route>
   </Routes>
   </BrowserRouter>

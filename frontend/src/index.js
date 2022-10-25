@@ -11,6 +11,7 @@ import './components/CustomerSignUp';
 import CustomerSignUp from './components/CustomerSignUp.js';
 import reportWebVitals from './reportWebVitals';
 import '../node_modules/bootstrap-icons/font/bootstrap-icons.css'
+import DeliveryStatus from './components/DeliveryStatus';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -22,6 +23,7 @@ root.render(
       <Route path='customerSignUp' element={<CustomerSignUp/>}/>
       <Route path='home' />
       <Route path='orderonline' />
+      <Route path='deliveryStatus' element={<DeliveryStatus/>}/>
     </Route>
   </Routes>
   </BrowserRouter>

@@ -10,6 +10,7 @@ import App from './App';
 import './components/CustomerSignUp';
 import CustomerSignUp from './components/CustomerSignUp.js';
 import reportWebVitals from './reportWebVitals';
+import '../node_modules/bootstrap-icons/font/bootstrap-icons.css'
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

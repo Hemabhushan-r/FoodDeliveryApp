@@ -2,6 +2,7 @@ import React from 'react'
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter as Router,Switch,Route,Link} from 'react-router-dom';
 
+
 class CustomerSignUp extends React.Component{
     constructor(props){
         super(props)
@@ -20,7 +21,7 @@ class CustomerSignUp extends React.Component{
             console.log(Credential);
         
           }
-          window.onload = function () {
+          function onComponentLoad() {
             google.accounts.id.initialize({
               client_id: "146665827801-tplvm4bfgnoi45bn2o3u9qs6pdkmmohq.apps.googleusercontent.com",
               callback: handleCredentialResponse,
@@ -32,6 +33,7 @@ class CustomerSignUp extends React.Component{
             );
             google.accounts.id.prompt(); // also display the One Tap dialog
           }
+          onComponentLoad();
     }
     onSignIn=()=>{
             let cred={id:'..',password:'..'};
@@ -39,7 +41,7 @@ class CustomerSignUp extends React.Component{
             console.log(cred);
     }
     render(){
-        return(<div className='container-fluid mt-2 pt-5 pb-2 w-100 px-0' style={this.styling}>
+        return(<div className='container-fluid mt-2 pt-5 pb-0 w-100 px-0' style={this.styling}>
             <style>{`
             @keyframes spin {
                  0% { background-position:0% 50%; }
@@ -51,7 +53,7 @@ class CustomerSignUp extends React.Component{
             <div className='mb-2 pb-2'>
                 <h1 className='pt-5' style={this.stylingH}>Few Steps to avail your food at your doorstep</h1>
             </div>
-            <div><img src='https://www.cypressgreen.in/blog/wp-content/uploads/2021/03/food.jpg' style={this.stylingImg} className='img-fluid'/></div>
+            <div ><img src='https://www.cypressgreen.in/blog/wp-content/uploads/2021/03/food.jpg' style={this.stylingImg} className='img-fluid shadow-lg'/></div>
             <h1 className='my-4' style={this.stylingH}>Share Some Info About You</h1>
             <div className='container px-0 shadow-lg rounded-4'  >
                 
@@ -96,6 +98,58 @@ class CustomerSignUp extends React.Component{
                         Click here if you already have an account to <Link>Sign in</Link>
                     </div>
                 </form>
+            </div>
+            <div className='container-fluid  mt-4 mb-2 py-4 bg-light'>
+                <div className='container '>
+                <div className='row'>
+                    <div className='col-lg-3 mb-3'>
+                        <h4>QuickFood</h4>
+                        <ul className='list-unstyled'>
+                            <li className='mb-2'><i className='bi bi-c-circle'></i> 2022-2022</li>
+                            <li className='mb-2'>Privacy terms</li>
+                            <li className='mb-2'>Delivery Compliancy</li>
+                        </ul>
+                        
+                    </div>
+                    <div className='col-6 col-lg-2 mb-3'>
+                        <h6>Product</h6>
+                        <ul className='list-unstyled'>
+                            <li className='mb-2'>Product1</li>
+                            <li className='mb-2'>Product2</li>
+                            <li className='mb-2'>Product3</li>
+                        </ul>
+                        
+                    </div>
+                    <div className='col-6 col-lg-2 mb-3'>
+                        <h6>Team</h6>
+                        <ul className='list-unstyled'>
+                            <li className='mb-2'>Member 1</li>
+                            <li className='mb-2'>Member 2</li>
+                            <li className='mb-2'>Member 3</li>
+                        </ul>
+                        
+                    </div>
+                    <div className='col-6 col-lg-2 mb-3'>
+                        <h6>City</h6>
+                        <ul className='list-unstyled'>
+                            <li className='mb-2'>City 1</li>
+                            <li className='mb-2'>City 2</li>
+                            <li className='mb-2'>City 3</li>
+                        </ul>
+                        
+                    </div>
+                    <div className='col-6 col-lg-2 mb-3'>
+                        <h6>Countries</h6>
+                        <ul className='list-unstyled'>
+                            <li className='mb-2'>Country 1</li>
+                            <li className='mb-2'>Country 2</li>
+                            <li className='mb-2'>Country 3</li>
+                        </ul>
+                        
+                    </div>
+                    
+                </div>
+                </div>
             </div>
         </div>)
     }

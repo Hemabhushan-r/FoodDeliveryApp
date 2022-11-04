@@ -1,6 +1,7 @@
 import React from 'react'
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter as Router,Switch,Route,Link} from 'react-router-dom';
+import {motion} from 'framer-motion';
 
 class Navbar extends React.Component{
     constructor(props){
@@ -15,14 +16,14 @@ class Navbar extends React.Component{
 
             <div className='navbar-collapse collapse' id='navbarSupportedContent'>
                 <ul className='navbar-nav m-auto'>
-                    <li className='nav-item active'>
-                        <a className='nav-link' href='#' ><i className='bi bi-basket3' style={{fontSize:'1.5em'}}></i>  Shop</a>
+                    <li className='nav-item active mx-2'>
+                        <a className='nav-link' href='#' ><motion.div style={{display:"inline-block"}} whileHover={{scale:1.2}} whileTap={{scale:0.95}}><i className='bi bi-basket3' style={{fontSize:'1.5em'}}></i></motion.div>  Shop</a>
                     </li>
-                    <li className='nav-item active'>
-                        <a className='nav-link' href='#' ><i className='bi bi-geo-alt' style={{fontSize:'1.5em'}}></i>  Location</a>
+                    <li className='nav-item active mx-2'>
+                        <a className='nav-link' href='#' ><motion.div style={{display:"inline-block"}} whileHover={{scale:1.2}} whileTap={{scale:0.95}}><i className='bi bi-geo-alt' style={{fontSize:'1.5em'}}></i></motion.div>  Location</a>
                     </li>
-                    <li className='nav-item active'>
-                        <Link to={'/addRestaurant'} className='nav-link' href='#' ><i className='bi bi-shop' style={{fontSize:'1.5em'}}></i>  Add Restaurant</Link>
+                    <li className='nav-item active mx-2'>
+                        <Link to={'/addRestaurant'} className='nav-link' href='#' ><motion.div style={{display:"inline-block"}} whileHover={{scale:1.2}} whileTap={{scale:0.95}}><i className='bi bi-shop' style={{fontSize:'1.5em'}}></i></motion.div>  Add Restaurant</Link>
                     </li>
                 </ul>
                 <button className='btn my-2 my-sm-0 m-1'>Log in</button>

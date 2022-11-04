@@ -1,6 +1,8 @@
 import React from 'react'
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter as Router,Switch,Route,Link} from 'react-router-dom';
+import MapWrapper from './MapWrapper';
+import {motion} from 'framer-motion'
 
 class DeliveryStatus extends React.Component{
     constructor(props){
@@ -10,6 +12,7 @@ class DeliveryStatus extends React.Component{
     }
     componentDidMount(){
         const map= new ol.Map({target:"map"});
+        
         map.setView(
             new ol.View({
                 center: ol.proj.fromLonLat([-79.3832, 43.6532]),
@@ -26,6 +29,7 @@ class DeliveryStatus extends React.Component{
             addCircleLayers();
             addRouteLayer();
         });
+        this.setState({newobj:"set"})
         let startLayer,endLayer,routeLayer;
 
         function addCircleLayers(){
@@ -142,7 +146,8 @@ class DeliveryStatus extends React.Component{
                     </ul>
                 </div>
                 <div className='container-fluid'>
-                <div className='container' id='map'   style={{width:'100%',marginBottom:'25em',height:'20em',fontFamily:'Arial,Helvetica, sans-serif',fontSize:'14px',color:'#323232'}}></div>
+                    <MapWrapper/>
+                {/* <div className='container' id='map'   style={{width:'100%',marginBottom:'25em',height:'20em',fontFamily:'Arial,Helvetica, sans-serif',fontSize:'14px',color:'#323232'}}></div> */}
                 </div>
                 <div className='container'>
                     <div className='row'>
@@ -179,35 +184,54 @@ class DeliveryStatus extends React.Component{
             </div>
             <div className='container-fluid'>
                 <h2 style={this.stylingH}>Wanna Order Some More</h2>
-                <div className='row'>
-                    <div className='col-6 col-lg-4 p-lg-2 px-lg-3 mb-3'>
-                        <div className='card mx-lg-5 rounded-4 shadow-lg' style={{backgroundColor:'#ffaf3f'}}>
+                <div className='row flex-row flex-nowrap customHScrollDisable' style={{overflowX:"auto",whiteSpace:"nowrap",scrollBehavior:"smooth",scrollbarWidth:"none"}}>
+                    <motion.div initial={{opacity:0.5}} whileInView={{opacity:1}} whileHover={{scale:1.05}} whileTap={{scale:0.95}} viewport={{once:true}} className='col-6 col-lg-3  p-lg-2 px-lg-1 mb-3' style={{display:"inline",float:"none"}}>
+                        <div className='card mx-lg-3 rounded-4 shadow' style={{backgroundColor:'#ffaf3f'}}>
                             <img className='rounded-4' src='https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg' alt='food-thumbnai'/>
                             <div className='card-body'>
                                 <div className='card-title'>Food1</div>
                                 <p className='card-text'><i className='bi bi-currency-rupee'></i> 120</p>
                             </div>
                         </div>
-                    </div>
-                    <div className='col-6 col-lg-4 p-lg-2 px-lg-3 mb-3'>
-                        <div className='card mx-lg-5 rounded-4 shadow-lg' style={{backgroundColor:'#ffaf3f'}}>
+                    </motion.div>
+                    <motion.div initial={{opacity:0.5}} whileInView={{opacity:1}} whileHover={{scale:1.05}} whileTap={{scale:0.95}} viewport={{once:true}} className='col-6 col-lg-3  p-lg-2 px-lg-1 mb-3' style={{display:"inline",float:"none"}}>
+                        <div className='card mx-lg-3 rounded-4 shadow' style={{backgroundColor:'#ffaf3f'}}>
                             <img className='rounded-4' src='https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg' alt='food-thumbnai'/>
                             <div className='card-body'>
                                 <div className='card-title'>Food1</div>
                                 <p className='card-text'><i className='bi bi-currency-rupee'></i> 120</p>
                             </div>
                         </div>
-                    </div>
-                    <div className='col-6 col-lg-4 p-lg-2 px-lg-3 mb-3'>
-                        <div className='card mx-lg-5 rounded-4 shadow-lg' style={{backgroundColor:'#ffaf3f'}}>
+                    </motion.div>
+                    <motion.div initial={{opacity:0.5}} whileInView={{opacity:1}} whileHover={{scale:1.05}} whileTap={{scale:0.95}} viewport={{once:true}} className='col-6 col-lg-3  p-lg-2 px-lg-1 mb-3' style={{display:"inline",float:"none"}}>
+                        <div className='card mx-lg-3 rounded-4 shadow' style={{backgroundColor:'#ffaf3f'}}>
                             <img className='rounded-4' src='https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg' alt='food-thumbnai'/>
                             <div className='card-body'>
                                 <div className='card-title'>Food1</div>
                                 <p className='card-text'><i className='bi bi-currency-rupee'></i> 120</p>
                             </div>
                         </div>
-                    </div>
+                    </motion.div>
+                    <motion.div initial={{opacity:0.5}} whileInView={{opacity:1}} whileHover={{scale:1.05}} whileTap={{scale:0.95}} viewport={{once:true}} className='col-6 col-lg-3  p-lg-2 px-lg-1 mb-3' style={{display:"inline",float:"none"}}>
+                        <div className='card mx-lg-3 rounded-4 shadow placeholder-glow' style={{backgroundColor:'#ffaf3f'}}>
+                            <img className='rounded-4 placeholder-wave' src='https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg' alt='food-thumbnai'/>
+                            <div className='card-body'>
+                                <div className='card-title placeholder w-100'></div>
+                                <p className='card-text'><i className='bi bi-currency-rupee'></i> 120</p>
+                            </div>
+                        </div>
+                    </motion.div>
+                    <motion.div initial={{opacity:0.5}} whileInView={{opacity:1}} whileHover={{scale:1.05}} whileTap={{scale:0.95}} viewport={{once:true}} className='col-6 col-lg-3  p-lg-2 px-lg-1 mb-3' style={{display:"inline",float:"none"}}>
+                        <div className='card mx-lg-3 rounded-4 shadow placeholder-glow' style={{backgroundColor:'#ffaf3f'}}>
+                            <img className='rounded-4 placeholder-wave' src='https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg' alt='food-thumbnai'/>
+                            <div className='card-body'>
+                                <div className='card-title placeholder w-100'></div>
+                                <p className='card-text'><i className='bi bi-currency-rupee'></i> 120</p>
+                            </div>
+                        </div>
+                    </motion.div>
                 </div>
+                
             </div>
             <div className='container-fluid  mt-4 mb-2 py-4 shadow-lg'style={{backgroundColor:'#ef6c00'}}>
                 <div className='container '>

@@ -135,7 +135,7 @@ class DeliveryStatus extends React.Component{
         return(<div className='container-fluid mt-2 pt-5 pb-0 w-100 px-0' style={this.styling}>
             <div className='mb-2 pb-2'>
                 <h1 className='pt-5' style={this.stylingH}>Order No : </h1>
-                <div className='vstack gap-2'>
+                <motion.div initial={{opacity:0.2}}  whileInView={{opacity:1}} viewport={{once:true}} className='vstack gap-2'>
                     <ul className='list-unstyled mx-auto'>
                         <li className='d-flex align-items-start'><i className='bi bi-arrow-return-right' style={{fontSize:'1.5em'}}> Order Placed  <i className='bi bi-check2-circle' style={{color:'lightgreen'}}></i></i></li>
                         <li className='d-flex align-items-start'><i className='bi bi-arrow-return-right' style={{fontSize:'1.5em'}}> Your food is being Prepared  <i className='bi bi-check2-circle' style={{color:'lightgreen'}}></i></i></li>
@@ -144,7 +144,7 @@ class DeliveryStatus extends React.Component{
                         <li className='d-flex align-items-start'><i className='bi bi-arrow-return-right' style={{fontSize:'1.5em'}}> Your food has been delivered  <i className='bi bi-check2-circle' style={{color:'lightgreen'}}></i></i></li>
                         <li>  <span className='badge bg-black rounded-pill' style={{fontSize:'1.1em'}}>at 8:30 PM</span></li>
                     </ul>
-                </div>
+                </motion.div>
                 <div className='container-fluid'>
                     <MapWrapper/>
                 {/* <div className='container' id='map'   style={{width:'100%',marginBottom:'25em',height:'20em',fontFamily:'Arial,Helvetica, sans-serif',fontSize:'14px',color:'#323232'}}></div> */}

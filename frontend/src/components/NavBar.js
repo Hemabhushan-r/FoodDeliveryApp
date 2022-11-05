@@ -7,11 +7,12 @@ class Navbar extends React.Component{
     constructor(props){
         super(props)
         this.styling={background:'linear-gradient(45deg,#ef6c00,#ef6c00)',backdropFilter:'blur(0.8)'}
+        this.stylingNavbarBrand={fontFamily:'Cookie',fontSize:'1.8em'}
     }
     render(){
         return (<nav className='navbar navbar-expand-lg fixed-top bg-light shadow' style={this.styling}>
             <div className='container-fluid'>
-            <a className='navbar-brand' href='#'>QuickFood</a>
+            <Link className='navbar-brand' style={this.stylingNavbarBrand} to={'/'}>QuickFood</Link>
             <button className='navbar-toggler' type='button' data-bs-toggle='collapse' data-bs-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation'><span className='navbar-toggler-icon'></span></button>
 
             <div className='navbar-collapse collapse' id='navbarSupportedContent'>

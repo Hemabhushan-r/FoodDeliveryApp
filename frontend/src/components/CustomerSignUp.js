@@ -1,7 +1,7 @@
 import React from 'react'
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter as Router,Switch,Route,Link} from 'react-router-dom';
-
+import {motion} from 'framer-motion';
 
 class CustomerSignUp extends React.Component{
     constructor(props){
@@ -50,12 +50,12 @@ class CustomerSignUp extends React.Component{
             }
         `}</style>
             
-            <div className='mb-2 pb-2'>
+            <motion.div initial={{opacity:0.2}}  whileInView={{opacity:1}} viewport={{once:true}} className='mb-2 pb-2'>
                 <h1 className='pt-5' style={this.stylingH}>Few Steps to avail your food at your doorstep</h1>
-            </div>
-            <div ><img src='https://www.cypressgreen.in/blog/wp-content/uploads/2021/03/food.jpg' style={this.stylingImg} className='img-fluid shadow-lg'/></div>
-            <h1 className='my-4' style={this.stylingH}>Share Some Info About You</h1>
-            <div className='container px-0 shadow-lg rounded-4'  >
+            </motion.div>
+            <motion.div initial={{opacity:0.2}}  whileInView={{opacity:1}} viewport={{once:true}}><img src='https://www.cypressgreen.in/blog/wp-content/uploads/2021/03/food.jpg' style={this.stylingImg} className='img-fluid shadow-lg'/></motion.div>
+            <motion.h1 initial={{opacity:0.2}}  whileInView={{opacity:1}} viewport={{once:true}} className='my-4' style={this.stylingH}>Share Some Info About You</motion.h1>
+            <motion.div initial={{opacity:0.2,scale:0.8}}  whileInView={{opacity:1,scale:1}} viewport={{once:true}} className='container px-0 shadow-lg rounded-4'  >
                 
                 <form className='rounded-4 shadow-lg py-2' style={{backgroundColor:'#ffd149'}}>
                     <figcaption className='mx-2 my-2 px-2 py-2'><h2>Sign Up</h2></figcaption>
@@ -98,7 +98,7 @@ class CustomerSignUp extends React.Component{
                         Click here if you already have an account to <Link>Sign in</Link>
                     </div>
                 </form>
-            </div>
+            </motion.div>
             <div className='container-fluid  mt-4 mb-2 py-4 shadow-lg'style={{backgroundColor:'#ef6c00'}}>
                 <div className='container '>
                 <div className='row'>

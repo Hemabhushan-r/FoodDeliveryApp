@@ -12,6 +12,7 @@ import CustomerSignUp from './components/CustomerSignUp.js';
 import reportWebVitals from './reportWebVitals';
 import '../node_modules/bootstrap-icons/font/bootstrap-icons.css'
 import DeliveryStatus from './components/DeliveryStatus';
+import Home from './components/Home';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -21,7 +22,7 @@ root.render(
   <Routes>
     <Route path='/' element={<App/>}>
       <Route path='customerSignUp' element={<CustomerSignUp/>}/>
-      <Route path='home' />
+      <Route path='' element={<Home/>} />
       <Route path='orderonline' />
       <Route path='deliveryStatus' element={<DeliveryStatus/>}/>
     </Route>

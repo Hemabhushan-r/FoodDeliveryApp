@@ -3,16 +3,30 @@ import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter as Router,Switch,Route,Link} from 'react-router-dom';
 import MapWrapper from './MapWrapper';
 import {motion} from 'framer-motion'
+import RestaurantCard from './RestaurantCard';
+import RestaurantCardPlaceholder from './RestaurantCardPlaceholder';
+import axios from 'axios';
 
 class DeliveryStatus extends React.Component{
     constructor(props){
         super(props)
         this.styling={backgroundColor:'#fb8c00'}
         this.stylingH={fontFamily:'Cookie'}
+        this.state={restaurants:[]}
+    }
+    retrieveRestaurants=(baseAPIURL)=>{
+        axios.get(baseAPIURL).then(response=>{
+            this.setState({restaurants:response.data})
+            console.log(response.data)
+        })
+        .catch(err=>{
+            console.log(err)
+        })
     }
     componentDidMount(){
         const map= new ol.Map({target:"map"});
-        
+        const baseAPIURL='http://localhost:5000/api/restaurant_list'
+        this.retrieveRestaurants(baseAPIURL)
         map.setView(
             new ol.View({
                 center: ol.proj.fromLonLat([-79.3832, 43.6532]),
@@ -185,51 +199,13 @@ class DeliveryStatus extends React.Component{
             <div className='container-fluid'>
                 <h2 style={this.stylingH}>Wanna Order Some More</h2>
                 <div className='row flex-row flex-nowrap customHScrollDisable' style={{overflowX:"auto",whiteSpace:"nowrap",scrollBehavior:"smooth",scrollbarWidth:"none"}}>
-                    <motion.div initial={{opacity:0.5}} whileInView={{opacity:1}} whileHover={{scale:1.05}} whileTap={{scale:0.95}} viewport={{once:true}} className='col-6 col-lg-3  p-lg-2 px-lg-1 mb-3' style={{display:"inline",float:"none"}}>
-                        <div className='card mx-lg-3 rounded-4 shadow' style={{backgroundColor:'#ffaf3f'}}>
-                            <img className='rounded-4' src='https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg' alt='food-thumbnai'/>
-                            <div className='card-body'>
-                                <div className='card-title'>Food1</div>
-                                <p className='card-text'><i className='bi bi-currency-rupee'></i> 120</p>
-                            </div>
-                        </div>
-                    </motion.div>
-                    <motion.div initial={{opacity:0.5}} whileInView={{opacity:1}} whileHover={{scale:1.05}} whileTap={{scale:0.95}} viewport={{once:true}} className='col-6 col-lg-3  p-lg-2 px-lg-1 mb-3' style={{display:"inline",float:"none"}}>
-                        <div className='card mx-lg-3 rounded-4 shadow' style={{backgroundColor:'#ffaf3f'}}>
-                            <img className='rounded-4' src='https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg' alt='food-thumbnai'/>
-                            <div className='card-body'>
-                                <div className='card-title'>Food1</div>
-                                <p className='card-text'><i className='bi bi-currency-rupee'></i> 120</p>
-                            </div>
-                        </div>
-                    </motion.div>
-                    <motion.div initial={{opacity:0.5}} whileInView={{opacity:1}} whileHover={{scale:1.05}} whileTap={{scale:0.95}} viewport={{once:true}} className='col-6 col-lg-3  p-lg-2 px-lg-1 mb-3' style={{display:"inline",float:"none"}}>
-                        <div className='card mx-lg-3 rounded-4 shadow' style={{backgroundColor:'#ffaf3f'}}>
-                            <img className='rounded-4' src='https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg' alt='food-thumbnai'/>
-                            <div className='card-body'>
-                                <div className='card-title'>Food1</div>
-                                <p className='card-text'><i className='bi bi-currency-rupee'></i> 120</p>
-                            </div>
-                        </div>
-                    </motion.div>
-                    <motion.div initial={{opacity:0.5}} whileInView={{opacity:1}} whileHover={{scale:1.05}} whileTap={{scale:0.95}} viewport={{once:true}} className='col-6 col-lg-3  p-lg-2 px-lg-1 mb-3' style={{display:"inline",float:"none"}}>
-                        <div className='card mx-lg-3 rounded-4 shadow placeholder-glow' style={{backgroundColor:'#ffaf3f'}}>
-                            <img className='rounded-4 placeholder-wave' src='https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg' alt='food-thumbnai'/>
-                            <div className='card-body'>
-                                <div className='card-title placeholder w-100'></div>
-                                <p className='card-text'><i className='bi bi-currency-rupee'></i> 120</p>
-                            </div>
-                        </div>
-                    </motion.div>
-                    <motion.div initial={{opacity:0.5}} whileInView={{opacity:1}} whileHover={{scale:1.05}} whileTap={{scale:0.95}} viewport={{once:true}} className='col-6 col-lg-3  p-lg-2 px-lg-1 mb-3' style={{display:"inline",float:"none"}}>
-                        <div className='card mx-lg-3 rounded-4 shadow placeholder-glow' style={{backgroundColor:'#ffaf3f'}}>
-                            <img className='rounded-4 placeholder-wave' src='https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg' alt='food-thumbnai'/>
-                            <div className='card-body'>
-                                <div className='card-title placeholder w-100'></div>
-                                <p className='card-text'><i className='bi bi-currency-rupee'></i> 120</p>
-                            </div>
-                        </div>
-                    </motion.div>
+                    {this.state.restaurants.length===0?[<RestaurantCardPlaceholder rating={'3.4'} imgSrc={'https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg'} imgAlt={'food-thumbnail'} priceB={'200 FOR TWO'}/>,
+                    <RestaurantCardPlaceholder rating={'3.4'} imgSrc={'https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg'} imgAlt={'food-thumbnail'} priceB={'200 FOR TWO'}/>,
+                    <RestaurantCardPlaceholder rating={'3.4'} imgSrc={'https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg'} imgAlt={'food-thumbnail'} priceB={'200 FOR TWO'}/>,
+                    <RestaurantCardPlaceholder rating={'3.4'} imgSrc={'https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg'} imgAlt={'food-thumbnail'} priceB={'200 FOR TWO'}/>]
+                    :this.state.restaurants.map((restaurant)=>{
+                        return(<RestaurantCard key={restaurant.index} restaurantName={restaurant.Restaurant_Name} restaurantDesc={restaurant.Restaurant_Description} rating={restaurant.Restaurant_Rating} imgSrc={'https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg'} imgAlt={'food-thumbnail'} priceB={restaurant.Price_B}/>)
+                    })}
                 </div>
                 
             </div>

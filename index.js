@@ -1,10 +1,14 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const cors=require('cors')
 const routes = require('./routes/api');
 require('dotenv').config(); 
 
 const app = express();
+var corsOptions={
+  origin:"http://localhost:5001"
+}
 const port = process.env.PORT || 5000;
 mongoose
   .connect(process.env.DB, { useNewUrlParser: true })
@@ -17,6 +21,7 @@ app.use((req, res, next) => {
   next();
 });
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:true}))
 app.use('/api',routes);
 app.use((err,req,res,next)=>{
     console.log(err);

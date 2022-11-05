@@ -1,6 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const FoodPrices=require('../models/foodlist');
+const Restaurants=require('../models/restaurants');
+router.get('/restaurant_list',(req,res,next)=>{
+  Restaurants.find({})
+    .then(data=>{
+      res.send(data)
+    })
+    .catch(err=>{
+      console.log(err)
+    })
+})
+
 router.get('/foodlist', (req, res, next) => {
   // get placeholder
   FoodPrices.find({})

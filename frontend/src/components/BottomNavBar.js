@@ -4,12 +4,13 @@ import {BrowserRouter as Router,Switch,Route,Link} from 'react-router-dom';
 import {motion} from 'framer-motion'
 import axios from 'axios';
 
+
 class BottomNavbar extends React.Component{
     constructor(props){
         super(props)
     }
     render(){
-        return(<div className='container-fluid  mt-4 mb-2 py-4 shadow-lg'style={{backgroundColor:'#ef6c00'}}>
+        return(<div className='container-fluid  mt-5 mb-0 py-4 shadow-lg'style={{backgroundColor:'#ef6c00'}}>
         <div className='container '>
         <div className='row'>
             <div className='col-lg-3 mb-3'>

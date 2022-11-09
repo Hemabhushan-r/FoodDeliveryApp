@@ -3,12 +3,13 @@ import './App.css';
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './components/NavBar.js';
 import Navbar from './components/NavBar.js';
-
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import {BrowserRouter as Router,Route,Link, Outlet} from 'react-router-dom';
 
 function App() {
   return (
-    <div className="App">
+    <GoogleOAuthProvider clientId='146665827801-tplvm4bfgnoi45bn2o3u9qs6pdkmmohq.apps.googleusercontent.com' >
+      <div className="App">
       <Navbar/>
       {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
@@ -26,7 +27,8 @@ function App() {
         </a>
       </header> */}
       <Outlet/>
-    </div>
+      </div>
+    </GoogleOAuthProvider>
   );
 }
 

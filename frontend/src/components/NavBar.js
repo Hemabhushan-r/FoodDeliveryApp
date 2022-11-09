@@ -50,7 +50,7 @@ class Navbar extends React.Component{
             <div className='navbar-collapse collapse' id='navbarSupportedContent'>
                 <ul className='navbar-nav m-auto'>
                     <li className='nav-item active mx-2'>
-                        <a className='nav-link' href='#' ><motion.div style={{display:"inline-block"}} whileHover={{scale:1.2}} whileTap={{scale:0.95}}><i className='bi bi-basket3' style={{fontSize:'1.5em'}}></i></motion.div>  Shop</a>
+                        <Link className='nav-link' to={'/orderOnline'} ><motion.div style={{display:"inline-block"}} whileHover={{scale:1.2}} whileTap={{scale:0.95}}><i className='bi bi-basket3' style={{fontSize:'1.5em'}}></i></motion.div>  Shop</Link>
                     </li>
                     <li className='nav-item active mx-2'>
                         <a className='nav-link' href='#' ><motion.div style={{display:"inline-block"}} whileHover={{scale:1.2}} whileTap={{scale:0.95}}><i className='bi bi-geo-alt' style={{fontSize:'1.5em'}}></i></motion.div>  Location</a>

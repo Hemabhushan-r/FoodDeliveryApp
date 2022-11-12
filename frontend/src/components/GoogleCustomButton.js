@@ -1,17 +1,20 @@
 import React from 'react'
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import {BrowserRouter as Router,Switch,Route,Link} from 'react-router-dom';
+import {BrowserRouter as Router,Switch,Route,Link,useNavigate} from 'react-router-dom';
 import {motion} from 'framer-motion';
 import {GoogleOAuthProvider,GoogleLogin,googleLogout,useGoogleLogin} from '@react-oauth/google';
 import axios from 'axios';
 
 const GoogleCustomButton=()=>{
+    const navigate=useNavigate()
     const onGoogleSignIn=useGoogleLogin({onSuccess:async tokenResponse=>{
         const userInfo =await  axios.get('https://www.googleapis.com/oauth2/v3/userinfo',
         {headers:{Authorization:`Bearer ${tokenResponse.access_token}`}}).then(res=>res.data)
         console.log(userInfo)
-        
-        console.log(tokenResponse)},onError:error=>console.log(error)})
+        localStorage.setItem('profile',JSON.stringify({result:userInfo,...tokenResponse}))
+        console.log(tokenResponse)
+        navigate("/")
+   },onError:error=>console.log(error)})
     const handleSubmit=(e)=>{
         e.preventDefault()
     }

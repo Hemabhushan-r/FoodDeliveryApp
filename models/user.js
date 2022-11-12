@@ -2,15 +2,30 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 // Create schema 
 const UserSchema = new Schema({
-  food: {
+  name: {
     type: String,
-    required: [true, 'The food text field is required'],
+    required: [true, 'The name text field is required'],
   },
-  price: {
+  email: {
+    type: String,
+    required: [true, 'The email field is required'],
+  },
+  password: {
+    type: String,
+    required: [true, 'The password field is required'],
+  },
+  number: {
     type: Number,
-    required: [true, 'The price field is required'],
+    required: [true, 'The number field is required'],
   },
+  id: {
+    type: String
+  },
+  role:{
+    type: String,
+    required: [true, 'The role field is required'],
+  }
 });
 // Create model
-const FoodPrices = mongoose.model('users', UserSchema);
-module.exports = FoodPrices;
+const Usermodel = mongoose.model('users', UserSchema);
+module.exports = Usermodel;

@@ -8,20 +8,26 @@ import BottomNavbar from './BottomNavBar';
 import {GoogleOAuthProvider,GoogleLogin,googleLogout,useGoogleLogin} from '@react-oauth/google';
 import GoogleCustomButton from './GoogleCustomButton';
 import axios from 'axios';
+import SignInSection from './SignInSection';
 
 class SignIn extends React.Component{
     constructor(props){
         super(props)
         this.styling={backgroundColor:'#fb8c00'}
+        this.errorText='Default Error'
         this.stylingH1={fontFamily:'Cookie',fontSize:'4em'}
         this.stylingH2={fontFamily:'Cookie',fontSize:'2.2em'}
         this.stylingImg={objectFit:'none',objectPosition:'center',maxHeight:'400px',width:'100%'}
         this.state={restaurants:[]}
     }
+    handleError=(errorText)=>{
+        this.errorModalText.innerHTML=errorText
+        this.errorModalBtn.click()
+    }
     retrieveRestaurants=(baseAPIURL)=>{
         axios.get(baseAPIURL).then(response=>{
             this.setState({restaurants:response.data})
-            console.log(response.data)
+            //console.log(response.data)
         })
         .catch(err=>{
             console.log(err)
@@ -40,44 +46,7 @@ class SignIn extends React.Component{
                         <div className='col-12 col-lg-6'>
                             <img className='shadow-lg rounded-3 pt-2' style={this.stylingImg} src='https://www.cypressgreen.in/blog/wp-content/uploads/2021/03/food.jpg' alt='food-img'></img>
                         </div>
-                        <motion.div initial={{scale:0.8}} whileInView={{scale:1}} viewport={{once:true}}  className='pt-3 col-12 col-lg-6'>
-                        <form className='rounded-4 shadow-lg py-2' style={{backgroundColor:'#ffd149'}}>
-                    <figcaption className='mx-2 my-2 px-2 py-2'><h2>Sign In</h2></figcaption>                    
-                    <div className='form-floating mb-3 mx-4'>
-                        <input type='email' className='form-control' id='floatingEmail' placeholder='name@example.com'/>
-                        <label htmlFor='floatingEmail'>Email</label>
-                    </div>
-                    <div className='form-floating mb-3 mx-4'>
-                        <input type='password' className='form-control' id='floatingPassword' placeholder='Password'/>
-                        <label htmlFor='floatingPassword'>Password</label>
-                    </div>        
-                    <div className='d-grid px-4'  >
-                    <button type='submit' className='btn btn-secondary' >Sign In</button>
-                    </div>
-                    <div className='pt-2 row'>
-                        <div className='col-5'>
-                        <hr className='hr mx-4' />
-                        </div>
-                        <div className='col-2'>
-                        Or
-                        </div>
-                        <div className='col-5'>
-                        <hr className='hr mx-4' />
-                        </div>
-                    </div>
-                    
-                    <div className='d-grid px-4'>
-                    <GoogleCustomButton/>
-                    </div>
-                    {/* <div className='d-grid px-4'>
-                    <button type='submit' onSubmit={this.onSignIn} className='btn btn-outline-secondary'><img style={{height:'25px',width:'25px'}}src='https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1200px-Google_%22G%22_Logo.svg.png' className='img-fluid'/>        Continue with Google</button>
-                    </div> */}
-                    <hr className='hr mx-4' />
-                    <div className='mx-2 py-2'>
-                        Click here to create an account <Link to={'/customerSignUp'}>Sign Up</Link>
-                    </div>
-                </form>
-                        </motion.div>
+                        <SignInSection handleError={this.handleError}/>
                     </div>                    
                 </motion.div>
             </div>
@@ -94,6 +63,25 @@ class SignIn extends React.Component{
                     })}
                 </div>
                 
+            </div>
+            <button ref={input=>this.errorModalBtn=input} type='button' className='d-none btn btn-primary' data-bs-toggle='modal' data-bs-target='#errorModal'>
+                    Launch Error Modal
+            </button> 
+            <div className='modal fade' id='errorModal' tabIndex='-1' aria-labelledby='errorModalLabel' aria-hidden='true'>
+                <div className='modal-dialog'>
+                    <div className='modal-content'>
+                        <div className='modal-header'>
+                            <h1 className='modal-title fs-5' id='errorModalLabel'>Oops!</h1>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className='modal-body' ref={input=>this.errorModalText=input}>
+                            {this.errorText}
+                        </div>
+                        <div className='modal-footer'>
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
             </div>
             <BottomNavbar/>
         </div>)

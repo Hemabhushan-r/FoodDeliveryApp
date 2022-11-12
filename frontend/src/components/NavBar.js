@@ -1,6 +1,7 @@
 import React from 'react'
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter as Router,Switch,Route,Link,useLocation} from 'react-router-dom';
+import {Avatar} from '@mui/material'
 import {motion} from 'framer-motion';
 import withRouter from './withRouter';
 import decode from 'jwt-decode';
@@ -15,6 +16,7 @@ class Navbar extends React.Component{
 
     }
     logout=()=>{
+        localStorage.removeItem('profile')
         this.setState({user:null})
     }
     componentDidMount(){
@@ -59,12 +61,14 @@ class Navbar extends React.Component{
                         <Link to={'/addRestaurant'} className='nav-link' href='#' ><motion.div style={{display:"inline-block"}} whileHover={{scale:1.2}} whileTap={{scale:0.95}}><i className='bi bi-shop' style={{fontSize:'1.5em'}}></i></motion.div>  Add Restaurant</Link>
                     </li>
                 </ul>
-                {this.state.user?.result ?<div>
-                    <span>{user?.result.name}</span>
-                    <button className='btn my-2 my-sm-0 m-1' onClick={this.logout}>Log out</button>
+                {this.state.user?.result ?<div className='row px-4'>      
+                    <div className='col-1 d-inline-flex'><Avatar className='border border-3 shadow-lg border-dark' alt={this.state.user?.result.name} src={this.state.user?.result.picture}>{this.state.user?.result.name.charAt(0)}</Avatar></div>
+                    <div className='col-3 fw-bold px-2 mx-4'>{this.state.user?.result.name}</div>      
+                    
+                    <button className='col-3 mx-4 btn btn-outline-dark my-2 my-sm-0 m-1' onClick={this.logout}>Log out</button>
                 </div>:<div>
                 <Link to={'/signIn'} className='btn my-2 my-sm-0 m-1'>Log in</Link>
-                <Link to={'/customerSignUp'}><button className='btn btn-outline-primary my-2 my-sm-0 m-1'>Sign Up</button></Link>
+                <Link to={'/customerSignUp'}><button className='btn btn-outline-dark my-2 my-sm-0 m-1'>Sign Up</button></Link>
                 </div>
                 }
             </div>

@@ -3,40 +3,57 @@ import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter as Router,Switch,Route,Link} from 'react-router-dom';
 import {motion} from 'framer-motion';
 import BottomNavbar from './BottomNavBar';
+import withRouter from './withRouter';
 import {GoogleOAuthProvider,GoogleLogin,googleLogout,useGoogleLogin} from '@react-oauth/google';
 import GoogleCustomButton from './GoogleCustomButton';
+import axios from 'axios'
 
 class CustomerSignUp extends React.Component{
     constructor(props){
         super(props)
+        this.state={formData:{name:'',email:'',password:'',number:'',confirmpassword:'',role:'customer'}}
         this.styling={backgroundColor:'#fb8c00',animation:'spin 10s ease infinite'}
         this.stylingH={fontFamily:'Cookie'}
         this.stylingImg={objectFit:'none',objectPosition:'center',maxHeight:'200px',width:'100%'}
         this.googleSignUp=React.createRef()
     }
+
+    handleSubmit=(event)=>{
+        event.preventDefault()
+        axios.post('http://localhost:5000/user/signup',{...this.state.formData}).then(response=>{
+        localStorage.setItem('profile',JSON.stringify({...response.data}))
+        this.props.navigate("/")
+        })
+        console.log(this.state.formData)
+    }
+    handleChange=(event)=>{
+        this.setState({formData:{
+            ...this.state.formData,[event.target.name]:event.target.value
+        }})
+    }
     componentDidMount(){
-        let widthbtn=this.googleSignUp.current.offsetWidth;
-        function handleCredentialResponse(response) {
-            console.log("Encoded JWT ID token: " + response.credential);
-            console.log(response);
-          }
-          function handleUserDataResponse(Credential) {
-            console.log(Credential);
+        // let widthbtn=this.googleSignUp.current.offsetWidth;
+        // function handleCredentialResponse(response) {
+        //     console.log("Encoded JWT ID token: " + response.credential);
+        //     console.log(response);
+        //   }
+        //   function handleUserDataResponse(Credential) {
+        //     console.log(Credential);
         
-          }
-          function onComponentLoad() {
-            google.accounts.id.initialize({
-              client_id: "146665827801-tplvm4bfgnoi45bn2o3u9qs6pdkmmohq.apps.googleusercontent.com",
-              callback: handleCredentialResponse,
-              native_callback:handleUserDataResponse
-            });
-            google.accounts.id.renderButton(
-              document.getElementById("buttonDiv"),
-              { theme: "outline", size: "large",text:"signup_with",shape:"pill",width:widthbtn}  // customization attributes
-            );
-            google.accounts.id.prompt(); // also display the One Tap dialog
-          }
-          onComponentLoad();
+        //   }
+        //   function onComponentLoad() {
+        //     google.accounts.id.initialize({
+        //       client_id: "146665827801-tplvm4bfgnoi45bn2o3u9qs6pdkmmohq.apps.googleusercontent.com",
+        //       callback: handleCredentialResponse,
+        //       native_callback:handleUserDataResponse
+        //     });
+        //     google.accounts.id.renderButton(
+        //       document.getElementById("buttonDiv"),
+        //       { theme: "outline", size: "large",text:"signup_with",shape:"pill",width:widthbtn}  // customization attributes
+        //     );
+        //     google.accounts.id.prompt(); // also display the One Tap dialog
+        //   }
+        //   onComponentLoad();
     }
     onSignIn=()=>{
             let cred={id:'..',password:'..'};
@@ -61,19 +78,23 @@ class CustomerSignUp extends React.Component{
             <motion.h1 initial={{opacity:0.2}}  whileInView={{opacity:1}} viewport={{once:true}} className='my-4' style={this.stylingH}>Share Some Info About You</motion.h1>
             <motion.div initial={{opacity:0.2,scale:0.8}}  whileInView={{opacity:1,scale:1}} viewport={{once:true}} className='container px-0 shadow-lg rounded-4'  >
                 
-                <form className='rounded-4 shadow-lg py-2' style={{backgroundColor:'#ffd149'}}>
+                <form className='rounded-4 shadow-lg py-2' onSubmit={this.handleSubmit} style={{backgroundColor:'#ffd149'}}>
                     <figcaption className='mx-2 my-2 px-2 py-2'><h2>Sign Up</h2></figcaption>
                     <div className='form-floating mb-3 mx-4'>
-                        <input type='name' className='form-control' id='floatingName' placeholder='name'/>
+                        <input type='name' name='name' onChange={this.handleChange} className='form-control' id='floatingName' placeholder='name'/>
                         <label htmlFor='floatingName'>Full Name</label>
                     </div>
                     <div className='form-floating mb-3 mx-4'>
-                        <input type='email' className='form-control' id='floatingEmail' placeholder='name@example.com'/>
+                        <input type='email' name='email' onChange={this.handleChange} className='form-control' id='floatingEmail' placeholder='name@example.com'/>
                         <label htmlFor='floatingEmail'>Email</label>
                     </div>
                     <div className='form-floating mb-3 mx-4'>
-                        <input type='password' className='form-control' id='floatingPassword' placeholder='Password'/>
+                        <input type='password' name='password' onChange={this.handleChange} className='form-control' id='floatingPassword' placeholder='Password'/>
                         <label htmlFor='floatingPassword'>Password</label>
+                    </div>
+                    <div className='form-floating mb-3 mx-4'>
+                        <input type='password' name='confirmpassword' onChange={this.handleChange} className='form-control' id='floatingconfirmPassword' placeholder='Confirm Password'/>
+                        <label htmlFor='floatingconfirmPassword'>Confirm Password</label>
                     </div>
                     <div className='input-group mb-3 mx-auto px-4'>
                         <button className='btn btn-outline-secondary dropdown-toggle' type='button' data-bs-toggle='dropdown' aria-expanded='false'>+91</button>
@@ -82,10 +103,10 @@ class CustomerSignUp extends React.Component{
                             <li className='dropdown-item'>+63</li>
                             <li className='dropdown-item'>+94</li>
                         </ul>
-                        <input type='number' className='form-control' placeholder='Phone No.' aria-label='Phone Number'/>
+                        <input type='number' name='number' onChange={this.handleChange} className='form-control' placeholder='Phone No.' aria-label='Phone Number'/>
                     </div>
                     <div className='d-grid px-4'  >
-                    <button type='submit' className='btn btn-secondary' >Create Account</button>
+                    <button type='submit'  className='btn btn-secondary' >Create Account</button>
                     </div>
                     
                     <div className='pt-2 row'>
@@ -124,4 +145,4 @@ class CustomerSignUp extends React.Component{
     }
 }
 
-export default CustomerSignUp;
+export default withRouter(CustomerSignUp);

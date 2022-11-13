@@ -24,7 +24,7 @@ const signup=async (req,res)=>{
     try{
         const existingUser=await Users.findOne({email:email,role:role})
         if(existingUser){
-            return res.status(400).json({message:"User already exists as"+role})
+            return res.status(400).json({message:"User already exists as "+role})
         }
         if(password!=confirmpassword){
             return res.status(400).json({message:"Passwords don't match"})

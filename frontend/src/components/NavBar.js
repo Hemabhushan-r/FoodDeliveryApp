@@ -62,7 +62,7 @@ class Navbar extends React.Component{
                     </li>
                 </ul>
                 {this.state.user?.result ?<div className='row px-4'>      
-                    <div className='col-1 d-inline-flex'><Avatar className='border border-3 shadow-lg border-dark' alt={this.state.user?.result.name} src={this.state.user?.result.picture}>{this.state.user?.result.name.charAt(0)}</Avatar></div>
+                    <div className='col-1 d-inline-flex'><Avatar className='border border-3 shadow-lg border-warning' alt={this.state.user?.result.name} src={this.state.user?.result.picture}>{this.state.user?.result.name.charAt(0)}</Avatar></div>
                     <div className='col-3 fw-bold px-2 mx-4'>{this.state.user?.result.name}</div>      
                     
                     <button className='col-3 mx-4 btn btn-outline-dark my-2 my-sm-0 m-1' onClick={this.logout}>Log out</button>

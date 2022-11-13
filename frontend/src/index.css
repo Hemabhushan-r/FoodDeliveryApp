@@ -18,3 +18,12 @@ code {
 .customHScrollDisable{
   -ms-overflow-style: none;
 }
+
+#navbar-foodlist > .nav > .nav-link.active{
+  background:linear-gradient(45deg,#ef6c00,#ef6c00) !important;
+  box-shadow: 0px 2px 8px 1px black !important;
+}
+#navbar-foodlist > .nav > .nav> .nav-link.active{
+  background:linear-gradient(45deg,#ffd149,#ffd149) !important;
+  box-shadow: 0px 2px 8px 1px black !important;
+}

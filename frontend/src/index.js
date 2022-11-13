@@ -15,6 +15,7 @@ import DeliveryStatus from './components/DeliveryStatus';
 import Home from './components/Home';
 import SignIn from './components/SignIn';
 import OrderOnline from './components/OrderOnline';
+import Restaurant from './components/Restaurant';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -26,6 +27,7 @@ root.render(
       <Route path='customerSignUp' element={<CustomerSignUp/>}/>
       <Route path='signIn' element={<SignIn/>}/>
       <Route path='' element={<Home/>} />
+      <Route path='/restaurant/:res' element={<Restaurant/>}/>
       <Route path='orderOnline' element={<OrderOnline/>} />
       <Route path='deliveryStatus' element={<DeliveryStatus/>}/>
     </Route>

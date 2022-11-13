@@ -12,17 +12,24 @@ class CustomerSignUp extends React.Component{
     constructor(props){
         super(props)
         this.state={formData:{name:'',email:'',password:'',number:'',confirmpassword:'',role:'customer'}}
+        this.errorText='Default Error'
         this.styling={backgroundColor:'#fb8c00',animation:'spin 10s ease infinite'}
         this.stylingH={fontFamily:'Cookie'}
         this.stylingImg={objectFit:'none',objectPosition:'center',maxHeight:'200px',width:'100%'}
         this.googleSignUp=React.createRef()
     }
-
+    handleError=(errorText)=>{
+        this.errorModalText.innerHTML=errorText
+        this.errorModalBtn.click()
+    }
     handleSubmit=(event)=>{
         event.preventDefault()
         axios.post('http://localhost:5000/user/signup',{...this.state.formData}).then(response=>{
-        localStorage.setItem('profile',JSON.stringify({...response.data}))
+        localStorage.setItem('profile',JSON.stringify({...response.data}))        
         this.props.navigate("/")
+        }).catch((error)=>{
+            this.handleError(error.response.data.message)
+            console.log(error)
         })
         console.log(this.state.formData)
     }
@@ -140,6 +147,25 @@ class CustomerSignUp extends React.Component{
                     </div>
                 </form>
             </motion.div>
+            <button ref={input=>this.errorModalBtn=input} type='button' className='d-none btn btn-primary' data-bs-toggle='modal' data-bs-target='#errorModal'>
+                    Launch Error Modal
+            </button> 
+            <div  className='modal fade' id='errorModal' tabIndex='-1' aria-labelledby='errorModalLabel' aria-hidden='true'>
+                <div  className='modal-dialog'>
+                    <div style={{backgroundColor:'#ffaf3f'}} className='modal-content'>
+                        <div className='modal-header'>
+                            <h1 className='modal-title fs-5' id='errorModalLabel'>Oops!</h1>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className='modal-body' ref={input=>this.errorModalText=input}>
+                            {this.errorText}
+                        </div>
+                        <div className='modal-footer'>
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <BottomNavbar/>
         </div>)
     }

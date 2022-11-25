@@ -74,7 +74,7 @@ class SignInSection extends React.Component{
                     </div>
                     
                     <div className='d-grid px-4'>
-                    <GoogleCustomButton/>
+                    <GoogleCustomButton name={'name'}/>
                     </div>
                     {/* <div className='d-grid px-4'>
                     <button type='submit' onSubmit={this.onSignIn} className='btn btn-outline-secondary'><img style={{height:'25px',width:'25px'}}src='https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1200px-Google_%22G%22_Logo.svg.png' className='img-fluid'/>        Continue with Google</button>

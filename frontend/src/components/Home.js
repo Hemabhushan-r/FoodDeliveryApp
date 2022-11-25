@@ -35,7 +35,7 @@ class Home extends React.Component{
             <div className='px-3 mx-4 mb-2 pb-2'>                
                 <motion.div initial={{opacity:0.2}}  whileInView={{opacity:1}} viewport={{once:true}} className='vstack gap-2'>
                     <div className='row'>
-                        <div className='col-12 col-lg-6'>
+                        <motion.div initial={{x:-300}} whileInView={{x:0}} viewport={{once:true}} className='col-12 col-lg-6'>
                             <h1 className='d-flex pt-5' style={this.stylingH1}><span >Check out awesome food</span></h1>
                             <h2 className='d-flex' style={this.stylingH2}><span >Amazing food at your doorstep</span></h2>
                             <ul className='list-unstyled mx-2'>
@@ -44,10 +44,10 @@ class Home extends React.Component{
                                 <li className='d-flex align-items-start'><i className='bi bi-caret-right-fill' style={{fontSize:'1.4em'}}> Your top-notch favourites right at your fingertips</i></li>                                
                                 <li className='p-4 align-items-start'><Link to={'/orderOnline'}><button className='btn btn-dark' >Order Now</button></Link></li>
                             </ul>
-                        </div>
-                        <div className='col-12 col-lg-6'>
+                        </motion.div>
+                        <motion.div initial={{y:-400}} whileInView={{y:0}} viewport={{once:true}}  className='col-12 col-lg-6'>
                             <img className='shadow-lg rounded-3 pt-2' style={this.stylingImg} src='https://www.cypressgreen.in/blog/wp-content/uploads/2021/03/food.jpg' alt='food-img'></img>
-                        </div>
+                        </motion.div>
                     </div>                    
                 </motion.div>
             </div>
@@ -59,7 +59,7 @@ class Home extends React.Component{
                     <RestaurantCardPlaceholder rating={'3.4'} imgSrc={'https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg'} imgAlt={'food-thumbnail'} priceB={'200 FOR TWO'}/>,
                     <RestaurantCardPlaceholder rating={'3.4'} imgSrc={'https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg'} imgAlt={'food-thumbnail'} priceB={'200 FOR TWO'}/>]
                     :this.state.restaurants.map((restaurant)=>{
-                        return(<RestaurantCard key={restaurant.index} restaurantName={restaurant.Restaurant_Name} restaurantDesc={restaurant.Restaurant_Description} rating={restaurant.Restaurant_Rating} imgSrc={'https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg'} imgAlt={'food-thumbnail'} priceB={restaurant.Price_B}/>)
+                        return(<RestaurantCard key={restaurant.index} restaurantURL={restaurant.Restaurant_URL} restaurantName={restaurant.Restaurant_Name} restaurantDesc={restaurant.Restaurant_Description} rating={restaurant.Restaurant_Rating} imgSrc={'https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg'} imgAlt={'food-thumbnail'} priceB={restaurant.Price_B}/>)
                     })}
                 </div>
                 
@@ -72,7 +72,7 @@ class Home extends React.Component{
                     <RestaurantCardPlaceholder rating={'3.4'} imgSrc={'https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg'} imgAlt={'food-thumbnail'} priceB={'200 FOR TWO'}/>,
                     <RestaurantCardPlaceholder rating={'3.4'} imgSrc={'https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg'} imgAlt={'food-thumbnail'} priceB={'200 FOR TWO'}/>]
                     :this.state.restaurants.map((restaurant)=>{
-                        return(<RestaurantCard key={restaurant.index} restaurantName={restaurant.Restaurant_Name} restaurantDesc={restaurant.Restaurant_Description} rating={restaurant.Restaurant_Rating} imgSrc={'https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg'} imgAlt={'food-thumbnail'} priceB={restaurant.Price_B}/>)
+                        return(<RestaurantCard key={restaurant.index} restaurantURL={restaurant.Restaurant_URL} restaurantName={restaurant.Restaurant_Name} restaurantDesc={restaurant.Restaurant_Description} rating={restaurant.Restaurant_Rating} imgSrc={'https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg'} imgAlt={'food-thumbnail'} priceB={restaurant.Price_B}/>)
                     })}
                 </div>
                 

@@ -9,13 +9,38 @@ class FoodCard extends React.Component{
         this.state={isFoodAdded:false}
     }
     handleFoodAdd=()=>{
+        const item={foodName:this.props.foodName,imgSrc:this.props.imgSrc,count:1,price:parseInt(this.props.price)}
         if(this.state.isFoodAdded===false){
+            this.props.updateCartItem('add',item)
             this.setState({isFoodAdded:true})
         }
         else{
+            this.props.updateCartItem('remove',item)
             this.setState({isFoodAdded:false})
         }
         
+    }
+    componentDidUpdate(prevProps){
+        const item={foodName:this.props.foodName,imgSrc:this.props.imgSrc,count:1,price:parseInt(this.props.price)}
+        if(this.props.cartItems!=prevProps.cartItems){
+            console.log(this.props.cartItems)
+            const isFoodInCart=this.props.cartItems?.filter((cartitem)=>{
+                return cartitem.foodName===item.foodName
+            })
+            console.log(isFoodInCart)
+            if(isFoodInCart?.length!=undefined){
+                if(isFoodInCart?.length!==0){
+                    if(isFoodInCart[0].foodName===item.foodName){
+                        this.setState({isFoodAdded:true})
+                    }
+                    
+                }
+                else {
+                    this.setState({isFoodAdded:false})
+                }
+            }
+            
+        }
     }
     render(){
         return(<motion.div id={this.props.Id} initial={{opacity:0.5}} whileInView={{opacity:1}} whileHover={{scale:1.005}} whileTap={{scale:0.995}} viewport={{once:true}} className='py-lg-2 mb-2'>
@@ -24,7 +49,8 @@ class FoodCard extends React.Component{
                 <div className='col-9'>
                     <div className='card-body'>
                         <div className='card-title h4  d-flex'>{this.props.foodName}</div>
-                        <div className='card-text d-flex'><i className='bi bi-currency-rupee'></i> 120</div>
+                        <div className='card-text d-flex'><i className='bi bi-currency-rupee'></i>{this.props.price}</div>
+                        <div className='card-text d-flex'>{this.props.description}</div>
                         <div className='d-flex'>{this.state.isFoodAdded?<button onClick={this.handleFoodAdd} className='btn btn-danger'>Remove  <i className='bi bi-cart-plus'></i></button>:<button onClick={this.handleFoodAdd} className='btn btn-success'>Add  <i className='bi bi-cart-plus'></i></button>}</div>
                     </div>
                 </div>

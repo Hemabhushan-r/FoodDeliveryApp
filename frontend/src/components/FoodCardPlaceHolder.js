@@ -25,6 +25,7 @@ class FoodCardPlaceholder extends React.Component{
                     <div className='card-body placeholder-glow'>
                         <div className='card-title h4  d-flex placeholder'>{this.props.foodName}</div>
                         <div className='card-text d-flex placeholder'><i className='bi bi-currency-rupee'></i> 120</div>
+                        <div className='card-text d-flex placeholder'>{'Exclusive food description right for you'}</div>
                         <div className='d-flex'>{this.state.isFoodAdded?<button onClick={this.handleFoodAdd} className='btn btn-danger placeholder'>Remove  <i className='bi bi-cart-plus'></i></button>:<button onClick={this.handleFoodAdd} className='btn btn-success placeholder'>Add  <i className='bi bi-cart-plus'></i></button>}</div>
                     </div>
                 </div>

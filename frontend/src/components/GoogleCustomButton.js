@@ -4,14 +4,18 @@ import {BrowserRouter as Router,Switch,Route,Link,useNavigate} from 'react-route
 import {motion} from 'framer-motion';
 import {GoogleOAuthProvider,GoogleLogin,googleLogout,useGoogleLogin} from '@react-oauth/google';
 import axios from 'axios';
+import { PromiseProvider } from 'mongoose';
 
-const GoogleCustomButton=()=>{
+function GoogleCustomButton(props){
     const navigate=useNavigate()
+    
     const onGoogleSignIn=useGoogleLogin({onSuccess:async tokenResponse=>{
         const userInfo =await  axios.get('https://www.googleapis.com/oauth2/v3/userinfo',
         {headers:{Authorization:`Bearer ${tokenResponse.access_token}`}}).then(res=>res.data)
         console.log(userInfo)
-        localStorage.setItem('profile',JSON.stringify({result:userInfo,...tokenResponse}))
+
+        console.log(props)
+        localStorage.setItem('profile',JSON.stringify({result:userInfo,...tokenResponse,cartItems:[],role:props.role}))
         console.log(tokenResponse)
         navigate("/")
    },onError:error=>console.log(error)})

@@ -53,15 +53,7 @@ class Cart extends React.Component{
                 {this.state.cart?.length==0?<div className='h2'>Cart is Empty</div>:
                 this.state.cart?.map((cartItem)=>{
                     return <CartFoodCard price={cartItem.price} updateCartItem={this.props.updateCartItem} count={cartItem.count} foodName={cartItem.foodName} imgSrc={cartItem.imgSrc} imgAlt={'food-thumbnail'}/>
-                })}
-                <CartFoodCard count='4' foodName='HamBurger' imgSrc={'https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg'} imgAlt={'food-thumbnail'}/>
-                <CartFoodCard count='4' foodName='HamBurger' imgSrc={'https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg'} imgAlt={'food-thumbnail'}/>
-                <CartFoodCard count='4' foodName='HamBurger' imgSrc={'https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg'} imgAlt={'food-thumbnail'}/>
-                <CartFoodCard count='4' foodName='HamBurger' imgSrc={'https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg'} imgAlt={'food-thumbnail'}/>
-                <CartFoodCard count='4' foodName='HamBurger' imgSrc={'https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg'} imgAlt={'food-thumbnail'}/>
-                <CartFoodCard count='4' foodName='HamBurger' imgSrc={'https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg'} imgAlt={'food-thumbnail'}/>
-                <CartFoodCard count='4' foodName='HamBurger' imgSrc={'https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg'} imgAlt={'food-thumbnail'}/>
-                <CartFoodCard count='4' foodName='HamBurger' imgSrc={'https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg'} imgAlt={'food-thumbnail'}/>
+                })}                
                 <div className='rounded-4 fw-bold fs-5 shadow-lg' style={{backgroundColor:'#ffaf3f'}}>
                     <div className='d-flex justify-content-between px-3 py-1'><div>Sum:</div><i className='bi bi-currency-rupee'>{this.state.cartSum}</i></div>
                     <div className='d-flex justify-content-between px-3 py-1'><div>Delivery Charges:</div><i className='bi bi-currency-rupee'>{this.state.cartDC}</i></div>

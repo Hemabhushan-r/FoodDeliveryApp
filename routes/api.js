@@ -3,6 +3,7 @@ const router = express.Router();
 const FoodPrices=require('../models/foodlist');
 const Restaurants=require('../models/restaurants');
 const UserCart=require('../models/userCartItems');
+const RestaurantFoodlist=require('../models/restfoodlist');
 router.get('/restaurant_list',(req,res,next)=>{
   Restaurants.find({})
     .then(data=>{
@@ -11,6 +12,20 @@ router.get('/restaurant_list',(req,res,next)=>{
     .catch(err=>{
       console.log(err)
     })
+})
+router.post('/rest_foodlist',async (req,res,next)=>{
+  const {Restaurant_URL}=req.body
+  //console.log(Restaurant_URL)
+  try{
+    const rest_foodlist=await RestaurantFoodlist.findOne({Restaurant_URL:Restaurant_URL});
+    if(!rest_foodlist){
+      return res.status(404).json({message:'Restaurant Foodlist Not Found'});
+    }
+    res.status(200).json({rest_foodlist:rest_foodlist})
+  }
+  catch(error){
+    res.status(500).json({message:'Something went wrong'})
+  }
 })
 router.get('/getusercartItems',async (req,res,next)=>{
   const {name,email}=req.body;

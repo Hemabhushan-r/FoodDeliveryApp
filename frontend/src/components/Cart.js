@@ -21,6 +21,36 @@ class Cart extends React.Component{
     retrieveCartItems=()=>{
         
     }
+    paymentHandler = async (e) => {
+        const API_URL = 'http://localhost:5000/api/'
+        e.preventDefault();
+        const orderUrl = `${API_URL}order`;
+        const response = await axios.get(orderUrl);
+        const { data } = response;
+        const options = {
+          key: process.env.RAZOR_PAY_KEY_ID,
+          name: "Quick Food",
+          description: "Food at your doorsteps",
+          order_id: data.id,
+          handler: async (response) => {
+            try {
+             const paymentId = response.razorpay_payment_id;
+             const url = `${API_URL}capture/${paymentId}`;
+             const captureResponse = await Axios.post(url, {})
+             console.log(captureResponse.data);
+            } catch (err) {
+              console.log(err);
+            }
+          },
+          theme: {
+            color: "#686CFD",
+          },
+        };
+        const rzp1 = new window.Razorpay(options);
+        rzp1.open();
+        };
+
+
     componentDidMount(){
         //console.log(this.state.cart)
         const cartSum=this.props.cartItems?.reduce((accumulator,item)=>{
@@ -60,7 +90,9 @@ class Cart extends React.Component{
                     <div className='d-flex justify-content-between px-3 py-1'><div>Tax:</div><i className='bi bi-currency-rupee'>{this.state.cartTax}</i></div>
                     <hr className='px-2 mx-3'/>
                     <div className='d-flex justify-content-between px-3 py-1'><div>Total:</div><i className='bi bi-currency-rupee'>{this.state.cartTotal}</i></div>
+                    
                 </div>
+                <div className='my-2 py-2 '><button onClick={this.paymentHandler} className='btn btn-success'>Pay</button></div>
             </div>
         </motion.div>)
     }

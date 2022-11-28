@@ -96,7 +96,7 @@ class Restaurant extends React.Component{
                     <div className='col-lg-6 my-3'>
                         {this.state.Restaurant_Name==='PlaceHolder Restaurant'?<div className='placeholder-glow'><h1 className='placeholder' style={this.stylingH1}>{this.state.Restaurant_Name}</h1></div>:<h1 style={this.stylingH1}>{this.state.Restaurant_Name}</h1>}
                         {this.state.Restaurant_Description==='Restaurant Description Placeholder'?<div className='placeholder-glow'><h4 className='placeholder'>{this.state.Restaurant_Description}</h4></div>:<h4>{this.state.Restaurant_Description}</h4>}
-                        {this.state.Restaurant_Loc==='Location Placeholder'?<div className='placeholder-glow'><h5 className='placeholder'>{this.state.Restaurant_Loc}</h5></div>:<h5>{this.state.Restaurant_Loc}</h5>}
+                        {/* {this.state.Restaurant_Loc==='Location Placeholder'?<div className='placeholder-glow'><h5 className='placeholder'>{this.state.Restaurant_Loc}</h5></div>:<h5>{this.state.Restaurant_Loc}</h5>} */}
                         <div className='row p-4'>
                             {this.state.Restaurant_Rating==='Rating Placeholder'?<div className='col-3 placeholder-glow'>
                             <div className='placeholder'><i className='bi bi-star-fill' style={{color:this.props.rating>4?"green":"#ef6c00"}}></i> {this.state.Restaurant_Rating}                             

@@ -56,8 +56,6 @@ class SignInSection extends React.Component{
                             <li><button onClick={this.handleRoleDropdown} name='restaurant-admin' value='Restaurant Admin' className='dropdown-item' type='button'>Restaurant Admin</button></li>
                         </ul>
                     </div>
-                    
-
                     <div className='d-grid px-4'  >
                     <button type='submit' className='btn btn-secondary' >Sign In</button>
                     </div>

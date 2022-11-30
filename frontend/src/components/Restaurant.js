@@ -23,6 +23,38 @@ class Restaurant extends React.Component{
         this.state={foodlist:[],filteredfoodlist:[],searchtext:'',mounted:0,Restaurant_Name:'PlaceHolder Restaurant',Restaurant_Description:'Restaurant Description Placeholder'
         ,Restaurant_Rating:'Rating Placeholder',Price_B:'Price B Placeholder',Restaurant_Loc:'Location Placeholder',Offer:'Offer Placeholder'}
     }
+
+    offlineretriveFoodItems=(Restaurant_URL)=>{
+        const rest_off_foodlist=Rest_FoodList.filter((res)=>{
+            if(res.Restaurant_URL===Restaurant_URL){
+                return res
+            }
+            else{
+                return false
+            }
+        })
+        const Rest_foodlist=rest_off_foodlist[0]
+        const foodlist_desc=Rest_foodlist.Food_Description.slice(1,Rest_foodlist.Food_Description.length-1).split(",")
+        const foodlist_new=Rest_foodlist.Food_Name.slice(1,Rest_foodlist.Food_Name.length-1).split(",")
+        const foodlist_price=Rest_foodlist.Food_Price.slice(1,Rest_foodlist.Food_Price.length-1).split(",")
+        const foodlist_cat=Rest_foodlist.Food_Cat.slice(1,Rest_foodlist.Food_Cat.length-1).split(",")
+        const foodlist_cat_cnt=Rest_foodlist.Food_Cat_Count.slice(1,Rest_foodlist.Food_Cat_Count.length-1).split(",")
+        const foodlist_subcat=Rest_foodlist.Food_Subcat.slice(1,Rest_foodlist.Food_Subcat.length-1).split(",")
+        const foodlist_subcat_cnt=Rest_foodlist.Food_Subcat_Count.slice(1,Rest_foodlist.Food_Subcat_Count.length-1).split(",")
+        const foodlist_veg_nonveg=Rest_foodlist.Food_Veg_Nveg.slice(1,Rest_foodlist.Food_Veg_Nveg.length-1).split(",")
+        const foodObj=[]
+        for(let i=0;i<foodlist_new.length;i++){
+            foodObj.push({Food_Name:foodlist_new[i],Food_Description:foodlist_desc[i],Food_Price:foodlist_price[i],
+                Food_Veg_Nveg:foodlist_veg_nonveg[i]
+            })
+        }
+        console.log(foodObj)
+        console.log(this.state.foodlist.length)
+        if(this.state.foodlist.length===0){
+            this.setState({foodlist:[...foodObj],filteredfoodlist:[...foodObj]})
+        }
+
+    }
     retrieveFoodItems=(baseAPIURL,restaurantName,restaurantURL)=>{
         axios.post(baseAPIURL,{Restaurant_Name:restaurantName,Restaurant_URL:restaurantURL}).then(response=>{
             this.setState({restaurants:response.data})
@@ -82,9 +114,15 @@ class Restaurant extends React.Component{
             Food_Subcat:[...foodlist_subcat],Food_Subcat_Count:[...foodlist_subcat_cnt],Food_Veg_Nveg:[...foodlist_veg_nonveg]
         },()=>{
             console.log(this.state.foodlist)
+            
         })
         }).catch((error)=>{
             console.log(error)
+            console.log(this.state.foodlist)
+            if(this.state.foodlist.length===0){
+                this.offlineretriveFoodItems(this.props.location.pathname)
+                console.log('Offline trigger')
+            }
         })
         //this.retrieveFoodItems(baseAPIURL,,this.props.location.pathname)
     }
@@ -179,7 +217,7 @@ class Restaurant extends React.Component{
                 else{
                     return(<FoodCard veg_nonveg={food.Food_Veg_Nveg?.slice(2,food.Food_Veg_Nveg.length-1)} key={index} cartItems={this.props.cartItems}  setcartItems={this.props.setcartItems} updateCartItem={this.props.updateCartItem} price={food.Food_Price?.slice(2,food.Food_Price.length-1)}  description={food.Food_Description?.slice(2,food.Food_Description.length-1)} Id={'item-'+index} foodName={food.Food_Name?.slice(2,food.Food_Name.length-1)} imgSrc={'https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg'} imgAlt={'img-thumbnail'}/>)
                 }
-                })}
+                }).slice(0,15)}
                 
                 {/* this.state.foodlist.map((food,index)=>{
                     <FoodCard key={index} Id={'item-'+index+'-1'} foodName={food} imgSrc={'https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg'} imgAlt={'img-thumbnail'}/>

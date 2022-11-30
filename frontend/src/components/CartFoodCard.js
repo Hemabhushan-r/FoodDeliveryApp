@@ -16,6 +16,22 @@ class CartFoodCard extends React.Component{
         }
         
     }
+    handleFooddecrement=()=>{
+        const item={foodName:this.props.foodName,imgSrc:this.props.imgSrc,count:this.props.count,price:parseInt(this.props.price)}
+        if(this.state.isFoodAdded===true){
+            this.props.updateCartItem('updateQtydecrement',item)
+            this.setState({isFoodAdded:true})
+        }
+        
+    }
+    handleFoodincrement=()=>{
+        const item={foodName:this.props.foodName,imgSrc:this.props.imgSrc,count:this.props.count,price:parseInt(this.props.price)}
+        if(this.state.isFoodAdded===true){
+            this.props.updateCartItem('updateQtyincrement',item)
+            this.setState({isFoodAdded:true})
+        }
+        
+    }
     render(){
         return(<motion.div id={this.props.Id} initial={{opacity:0.5}} whileInView={{opacity:1}} whileHover={{scale:1.005}} whileTap={{scale:0.995}} viewport={{once:true}} className='mb-2'>
         <div className='card rounded-4 shadow' style={{backgroundColor:'#ffaf3f'}}>
@@ -26,7 +42,7 @@ class CartFoodCard extends React.Component{
                 <div className='col-9'>
                     <div className='card-body'>
                         <div className='card-title h4 d-flex justify-content-between align-items-end'><div className='ms-2 me-auto'></div>{this.props.foodName}</div>
-                        <div className='card-text d-flex justify-content-between align-items-end'><div className='ms-2 me-auto'></div><span className='badge bg-secondary rounded-pill'>x{this.props.count}</span><i className='bi bi-currency-rupee'></i>{this.props.price}</div>
+                        <div className='card-text d-flex justify-content-between align-items-end'><div className='ms-2 me-auto'></div><i onClick={this.handleFooddecrement} className='btn bi bi-dash-square'></i><span className='badge bg-secondary rounded-pill'>x{this.props.count}</span><i onClick={this.handleFoodincrement} className='btn bi bi-plus-square'></i><i className='bi bi-currency-rupee'></i>{this.props.price}</div>
                         <div className='pt-1 d-flex justify-content-between align-items-end'><div className='ms-2 me-auto'></div><button onClick={this.handleFoodRemove} className='btn btn-danger'>Remove  <i className='bi bi-cart-plus'></i></button></div>
                     </div>
                 </div>

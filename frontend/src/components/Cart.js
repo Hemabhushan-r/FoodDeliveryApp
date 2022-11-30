@@ -36,7 +36,7 @@ class Cart extends React.Component{
             try {
              const paymentId = response.razorpay_payment_id;
              const url = `${API_URL}capture/${paymentId}`;
-             const captureResponse = await Axios.post(url, {})
+             const captureResponse = await axios.post(url, {})
              console.log(captureResponse.data);
             } catch (err) {
               console.log(err);

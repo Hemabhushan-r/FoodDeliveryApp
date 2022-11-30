@@ -38,18 +38,27 @@ function App() {
       }
       else if(action==='updateQtyincrement'){
         items=user.cartItems.map((cartitem)=>{
+          if(cartitem.count>=0){
           if(cartitem.foodName===item.foodName){
             cartitem.count+=1
           }
+        }
+          return cartitem
         })
         localStorage.setItem('profile',JSON.stringify({...user,cartItems:items}))
         setcartItems(items)
       }
       else if(action==='updateQtydecrement'){
         items=user.cartItems.map((cartitem)=>{
+          if(cartitem.count==1){
+            updateCartItem('remove',item)
+          }
+          else if(cartitem.count>0){
           if(cartitem.foodName===item.foodName){
             cartitem.count-=1
           }
+        }
+          return cartitem
         })
         localStorage.setItem('profile',JSON.stringify({...user,cartItems:items}))
         setcartItems(items)

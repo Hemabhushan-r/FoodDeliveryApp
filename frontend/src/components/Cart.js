@@ -24,7 +24,7 @@ class Cart extends React.Component{
     paymentHandler = async (e) => {
         const API_URL = 'http://localhost:5000/api/'
         e.preventDefault();
-        const orderUrl = `${API_URL}order`;
+        const orderUrl = `${API_URL}order`+this.state.cartTotal;
         const response = await axios.get(orderUrl);
         const { data } = response;
         const options = {
@@ -36,7 +36,7 @@ class Cart extends React.Component{
             try {
              const paymentId = response.razorpay_payment_id;
              const url = `${API_URL}capture/${paymentId}`;
-             const captureResponse = await axios.post(url, {})
+             const captureResponse = await axios.post(url, {amount:this.state.cartTotal})
              console.log(captureResponse.data);
             } catch (err) {
               console.log(err);

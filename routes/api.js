@@ -11,10 +11,10 @@ const UserCart=require('../models/userCartItems');
 const RestaurantFoodlist=require('../models/restfoodlist');
 
 
-router.get("/order", (req, res) => {
+router.get("/order/:amount", (req, res) => {
   try {
     const options = {
-      amount: 20 * 100, // amount == Rs 10
+      amount: parseFloat(req.params.amount) * 100, // amount == Rs 10
       currency: "INR",
       receipt: "receipt#1",
       payment_capture: 0,
@@ -43,7 +43,7 @@ router.post("/capture/:paymentId", (req, res) => {
      method: "POST",
      url: `https://${config.RAZOR_PAY_KEY_ID}:${config.RAZOR_PAY_KEY_SECRET}@api.razorpay.com/v1/payments/${req.params.paymentId}/capture`,
      form: {
-        amount: 10 * 100, // amount == Rs 10 // Same As Order amount
+        amount: parseFloat(req.body.amount) * 100, // amount == Rs 10 // Same As Order amount
         currency: "INR",
       },
     },

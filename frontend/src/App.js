@@ -36,10 +36,19 @@ function App() {
       localStorage.setItem('profile',JSON.stringify({...user,cartItems:items}))
       setcartItems(items)
       }
-      else if(action==='updateQty'){
+      else if(action==='updateQtyincrement'){
         items=user.cartItems.map((cartitem)=>{
           if(cartitem.foodName===item.foodName){
             cartitem.count+=1
+          }
+        })
+        localStorage.setItem('profile',JSON.stringify({...user,cartItems:items}))
+        setcartItems(items)
+      }
+      else if(action==='updateQtydecrement'){
+        items=user.cartItems.map((cartitem)=>{
+          if(cartitem.foodName===item.foodName){
+            cartitem.count-=1
           }
         })
         localStorage.setItem('profile',JSON.stringify({...user,cartItems:items}))

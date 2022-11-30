@@ -24,11 +24,11 @@ class Cart extends React.Component{
     paymentHandler = async (e) => {
         const API_URL = 'http://localhost:5000/api/'
         e.preventDefault();
-        const orderUrl = `${API_URL}order`+this.state.cartTotal;
+        const orderUrl = `${API_URL}order`+'/'+this.state.cartTotal;
         const response = await axios.get(orderUrl);
         const { data } = response;
         const options = {
-          key: process.env.RAZOR_PAY_KEY_ID,
+          key:'rzp_live_1MykQeYgLLtfoG' ,//process.env.RAZOR_PAY_KEY_ID
           name: "Quick Food",
           description: "Food at your doorsteps",
           order_id: data.id,

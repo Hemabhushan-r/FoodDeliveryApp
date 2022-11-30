@@ -17,14 +17,14 @@ class MapWrapper extends React.Component{
         this.state={mapR:undefined}
         this.mapElement=React.createRef()
         console.log("Mounted")
-        this.mapRef=new ol.Map({target:this.mapElement.current});
+        //this.mapRef=new ol.Map({target:this.mapElement.current});
         //this.mapRef.current=this.state.mapR
-        this.startLayer;
-        this.endLayer;
-        this.routeLayer;
-        this.currentStep="start";
-        this.startCoords;
-        this.endCoords;
+        //this.startLayer;
+        //this.endLayer;
+        //this.routeLayer;
+        //this.currentStep="start";
+        //this.startCoords;
+        //this.endCoords;
     }
     componentDidMount(){
         // if(this.mapElement.current && !this.mapRef){

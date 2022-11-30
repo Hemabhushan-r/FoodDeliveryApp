@@ -63,9 +63,9 @@ class CustomerSignUp extends React.Component{
         //   onComponentLoad();
     }
     onSignIn=()=>{
-            let cred={id:'..',password:'..'};
-            google.accounts.id.storeCredential(cred);
-            console.log(cred);
+            // let cred={id:'..',password:'..'};
+            // google.accounts.id.storeCredential(cred);
+            // console.log(cred);
     }
     
     render(){

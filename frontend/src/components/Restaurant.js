@@ -270,19 +270,10 @@ class Restaurant extends React.Component{
                     
                 }
                 })}
-                
-                {/* this.state.foodlist.map((food,index)=>{
-                    <FoodCard key={index} Id={'item-'+index+'-1'} foodName={food} imgSrc={'https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg'} imgAlt={'img-thumbnail'}/>
-                }) */}
-                
-                {/* <FoodCardPlaceholder foodName={'HashBrown'} imgSrc={'https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg'} imgAlt={'img-thumbnail'}/>
-                <FoodCard Id={'item-1-1'} foodName={'HashBrown'} imgSrc={'https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg'} imgAlt={'img-thumbnail'}/>
-                <FoodCard Id={'item-1-2'} foodName={'HashBrown'} imgSrc={'https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg'} imgAlt={'img-thumbnail'}/>
-                <FoodCard Id={'item-2'} foodName={'HashBrown'} imgSrc={'https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg'} imgAlt={'img-thumbnail'}/>
-                <FoodCard Id={'item-3'} foodName={'HashBrown'} imgSrc={'https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg'} imgAlt={'img-thumbnail'}/>
-                <FoodCard Id={'item-3-1'} foodName={'HashBrown'} imgSrc={'https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg'} imgAlt={'img-thumbnail'}/>
-                <FoodCard Id={'item-3-2'} foodName={'HashBrown'} imgSrc={'https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg'} imgAlt={'img-thumbnail'}/>
-                 */}
+                {this.Food_Cat_index=0}
+        {this.Food_Arr_Cat_index=0}
+        {this.Food_SubCat_index=0}
+        {this.Food_Arr_SubCat_index=0}
                 </div>
             </div>
             </div>

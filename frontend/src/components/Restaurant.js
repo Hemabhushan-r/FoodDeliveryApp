@@ -20,9 +20,14 @@ class Restaurant extends React.Component{
         this.stylingH1={fontFamily:'Cookie',fontSize:'4em'}
         this.stylingH2={fontFamily:'Cookie',fontSize:'2.2em'}
         this.stylingImg={objectFit:'none',objectPosition:'center',maxHeight:'400px',width:'100%'}
-        this.state={foodlist:[],filteredfoodlist:[],searchtext:'',mounted:0,Restaurant_Name:'PlaceHolder Restaurant',Restaurant_Description:'Restaurant Description Placeholder'
+        this.state={foodlist:[],filteredfoodlist:[],searchtext:'',isvegon:false,mounted:0,Restaurant_Name:'PlaceHolder Restaurant',Restaurant_Description:'Restaurant Description Placeholder'
         ,Restaurant_Rating:'Rating Placeholder',Price_B:'Price B Placeholder',Restaurant_Loc:'Location Placeholder',Offer:'Offer Placeholder'}
     }
+     handlevegchange=(e)=>
+     {
+          this.setState({isvegon:e.target.checked})
+     }
+
 
     offlineretriveFoodItems=(Restaurant_URL)=>{
         const rest_off_foodlist=Rest_FoodList.filter((res)=>{
@@ -73,7 +78,25 @@ class Restaurant extends React.Component{
         }
     }
     handleSearchChange=(e)=>{
+        
+        if(this.state.isvegon==false)
+        {
         const list=this.state.foodlist.filter((food,index)=>{
+            if(this.state.searchtext===''){
+                return food
+            }
+            else{
+                return food.Food_Name.toLowerCase().includes(this.state.searchtext)
+            }
+            
+        })
+        this.setState({filteredfoodlist:list})
+        }
+
+
+        else
+        {    
+        const list=this.state.filteredfoodlist.filter((food,index)=>{
             if(this.state.searchtext===''){
                 return food
             }
@@ -82,8 +105,11 @@ class Restaurant extends React.Component{
             }
         })
         this.setState({filteredfoodlist:list})
+        }
+        //this.setState({filteredfoodlist:list})
         this.setState({searchtext:e.target.value.toLowerCase()})
         this.setState({searchtextactual:e.target.value})
+    
     }
     componentDidMount(){
         const baseAPIURL='http://localhost:5000/api/food_list'
@@ -178,7 +204,14 @@ class Restaurant extends React.Component{
                 <div className='col-3'>
                     <div className='row g-1'>
                         <div className='col fw-bold h3'>Filters:</div>
-                        <div className='col'><button onClick={()=>{this.updateFilteredList('veg')}} className='btn btn-secondary shadow-lg'>Veg Only</button></div>                    
+                        <div className='col'><button onClick={()=>{this.updateFilteredList('veg')}} className='btn btn-secondary shadow-lg'>Veg Only</button>
+                        <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" role="switch" onChange={this.handlevegchange} id="flexSwitchCheckDefault"/>
+        <label class="form-check-label" for="flexSwitchCheckDefault">Veg only</label>
+</div>
+                        
+                        </div>
+                                            
                     </div>
                 </div>
                 </div>

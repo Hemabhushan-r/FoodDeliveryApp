@@ -6,13 +6,16 @@ import {motion} from 'framer-motion'
 import RestaurantCard from './RestaurantCard';
 import RestaurantCardPlaceholder from './RestaurantCardPlaceholder';
 import axios from 'axios';
+import withContext from './withContext';
 
 class DeliveryStatus extends React.Component{
     constructor(props){
         super(props)
         this.styling={backgroundColor:'#fb8c00'}
         this.stylingH={fontFamily:'Cookie'}
-        this.state={restaurants:[]}
+        this.state={cart:this.props.cartItems,cartSum:this.props.cartItems?.reduce((accumulator,item)=>{
+            return accumulator+parseInt(item.count)*parseInt(item.price)
+        },0),cartDC:25,cartTax:0,cartTotal:0,restaurants:[]}
     }
     retrieveRestaurants=(baseAPIURL)=>{
         axios.get(baseAPIURL).then(response=>{
@@ -143,6 +146,12 @@ class DeliveryStatus extends React.Component{
         //         console.error(error);
         //     })
         // }
+                const cartSum=this.props.cartItems?.reduce((accumulator,item)=>{
+                    return accumulator+parseInt(item.count)*parseInt(item.price)
+                },0)
+                const cartTax=cartSum*0.18
+                const cartTotal=cartSum+cartTax+this.state.cartDC
+                this.setState({cart:this.props.cartItems,cartSum:cartSum,cartTax:cartTax,cartTotal:cartTotal})
 
     }
     render(){
@@ -168,14 +177,16 @@ class DeliveryStatus extends React.Component{
                     <div className='col-lg-4'><h4>Order Details</h4></div>
                     <div className='col-lg-4 '>
                         <ol className='list-group list-group-numbered shadow-lg' style={{color:'#fb8c00'}}>
-                            <li className='list-group-item d-flex justify-content-between align-items-start' style={{backgroundColor:'#ffaf3f'}}><div className='ms-2 me-auto'>Food1</div> <span className='badge bg-secondary rounded-pill'>x1</span><span className='ms-2'><i className='bi bi-currency-rupee'></i>60</span></li>
-                            <li className='list-group-item d-flex justify-content-between align-items-start' style={{backgroundColor:'#ffaf3f'}}><div className='ms-2 me-auto'>Food2</div> <span className='badge bg-secondary rounded-pill'>x1</span><span className='ms-2'><i className='bi bi-currency-rupee'></i>40</span></li>
-                            <li className='list-group-item d-flex justify-content-between align-items-start' style={{backgroundColor:'#ffaf3f'}}><div className='ms-2 me-auto'>Food3</div> <span className='badge bg-secondary rounded-pill'>x1</span><span className='ms-2'><i className='bi bi-currency-rupee'></i>20</span></li>
+                            {this.props.cartItems.map((fooditem)=>{
+                                return  <li className='list-group-item d-flex justify-content-between align-items-start' style={{backgroundColor:'#ffaf3f'}}><div className='ms-2 me-auto'>{fooditem.foodName}</div> <span className='badge bg-secondary rounded-pill'>x{fooditem.count}</span><span className='ms-2'><i className='bi bi-currency-rupee'></i>{fooditem.price}</span></li>
+                            })}
+                            
                         </ol>
                         <ul className='list-unstyled'>
-                            <li className='list-item d-flex justify-content-between align-items-start'><div className='ms-2 me-auto'>Delivery Charges</div> <span className='mx-3'><i className='bi bi-currency-rupee'></i>20</span></li>
-                            <li className='list-item d-flex justify-content-between align-items-start'><div className='ms-2 me-auto'>Tax</div> <span className='mx-3'><i className='bi bi-currency-rupee'></i>44</span></li>
-                            <li className='list-item d-flex justify-content-between align-items-start'><div className='ms-2 me-auto'>Total</div> <span className='mx-3'><i className='bi bi-currency-rupee'></i>184</span></li>
+                            <li className='list-item d-flex justify-content-between align-items-start'><div className='ms-2 me-auto'>Sum</div> <span className='mx-3'><i className='bi bi-currency-rupee'></i>{this.state.cartSum}</span></li>
+                            <li className='list-item d-flex justify-content-between align-items-start'><div className='ms-2 me-auto'>Delivery Charges</div> <span className='mx-3'><i className='bi bi-currency-rupee'></i>25</span></li>
+                            <li className='list-item d-flex justify-content-between align-items-start'><div className='ms-2 me-auto'>Tax</div> <span className='mx-3'><i className='bi bi-currency-rupee'></i>{this.state.cartTax}</span></li>
+                            <li className='list-item d-flex justify-content-between align-items-start'><div className='ms-2 me-auto'>Total</div> <span className='mx-3'><i className='bi bi-currency-rupee'></i>{this.state.cartTotal}</span></li>
                         </ul>
                     </div>
                     <div className='col-lg-4'>
@@ -264,4 +275,4 @@ class DeliveryStatus extends React.Component{
         </div>)
     }
 }
-export default DeliveryStatus;
+export default withContext(DeliveryStatus);

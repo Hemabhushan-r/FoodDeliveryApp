@@ -88,11 +88,23 @@ class Search extends React.Component{
         this.setState({searchtext:e.target.value.toLowerCase()})
         this.setState({searchtextactual:e.target.value})
     }
+    retrieveRestaurants=(baseAPIURL)=>{
+        axios.get(baseAPIURL).then(response=>{
+            this.setState({restaurants:response.data})
+            this.setState({filteredres:response.data})
+            console.log(response.data)
+        })
+        .catch(err=>{
+            console.log(err)
+            this.setState({restaurants:Restaurants})
+            this.setState({filteredres:Restaurants})
+            console.log(this.state.restaurants)
+        })
+    }
     componentDidMount(){
+        const baseAPIURL='http://localhost:5000/api/restaurant_list'
+            this.retrieveRestaurants(baseAPIURL)
         
-        this.setState({restaurants:Restaurants})
-        this.setState({filteredres:Restaurants})
-        console.log(this.state.restaurants)
     }
     render(){
         return(<div className='container-fluid mt-2 pt-5 pb-0 w-100 px-0' style={this.styling}>
@@ -122,8 +134,8 @@ class Search extends React.Component{
                     <RestaurantCardPlaceholder rating={'3.4'} imgSrc={'https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg'} imgAlt={'food-thumbnail'} priceB={'200 FOR TWO'}/>,
                     <RestaurantCardPlaceholder rating={'3.4'} imgSrc={'https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg'} imgAlt={'food-thumbnail'} priceB={'200 FOR TWO'}/>]
                     :this.state.filteredres.map((restaurant)=>{
-                        return(<RestaurantCard key={restaurant.index} restaurantURL={restaurant.Restaurant_URL} restaurantName={restaurant.Restaurant_Name} restaurantDesc={restaurant.Restaurant_Description} rating={restaurant.Restaurant_Rating} imgSrc={'https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg'} imgAlt={'food-thumbnail'} priceB={restaurant.Price_B}/>)
-                    }).slice(0,10)}
+                        return(<RestaurantCard key={restaurant.index} restaurantURL={restaurant.Restaurant_URL} restaurantName={restaurant.Restaurant_Name} restaurantDesc={restaurant.Restaurant_Description} rating={restaurant.Restaurant_Rating} imgSrc={restaurant.Restaurant_ImgURL} imgAlt={'food-thumbnail'} priceB={restaurant.Price_B}/>)
+                    }).slice(0,511)}
                 </div>
             </div>
             <BottomNavbar/>

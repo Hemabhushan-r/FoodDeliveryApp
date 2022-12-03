@@ -29,7 +29,7 @@ class Restaurant extends React.Component{
         this.stylingH1={fontFamily:'Cookie',fontSize:'4em'}
         this.stylingH2={fontFamily:'Cookie',fontSize:'2.2em'}
         this.stylingImg={objectFit:'none',objectPosition:'center',maxHeight:'400px',width:'100%'}
-        this.state={foodlist:[],filteredfoodlist:[],searchtext:'',mounted:0,Restaurant_Name:'PlaceHolder Restaurant',Restaurant_Description:'Restaurant Description Placeholder'
+        this.state={Restaurant_ImgURL:'https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg',foodlist:[],filteredfoodlist:[],searchtext:'',mounted:0,Restaurant_Name:'PlaceHolder Restaurant',Restaurant_Description:'Restaurant Description Placeholder'
         ,Restaurant_Rating:'Rating Placeholder',Price_B:'Price B Placeholder',Restaurant_Loc:'Location Placeholder',Offer:'Offer Placeholder'}
     }
 
@@ -108,7 +108,12 @@ class Restaurant extends React.Component{
 //         const dataSpyList = document.querySelectorAll('[data-bs-spy="scroll"]')
 // dataSpyList.forEach(dataSpyEl => {
 //   ScrollSpy.getOrCreateInstance(dataSpyEl).refresh()
-// })
+// })   
+        
+        const {imgSrc}=this.props.location.state
+        
+        
+        this.setState({Restaurant_ImgURL:imgSrc})
         const baseAPIURL='http://localhost:5000/api/food_list'
         const Restaurant_Name=this.props.location.pathname.split('/')[2].split('-').slice(0,2).join(' ')
         const Rest_Arr=this.props.location.pathname.split('/')[2].split('-').slice(2)
@@ -160,7 +165,9 @@ class Restaurant extends React.Component{
         return(<div className='container-fluid mt-2 pt-5 pb-0 w-100 px-0' style={this.styling}>
             <motion.div initial={{opacity:0.,x:-200}}  whileInView={{opacity:1,x:0}} viewport={{once:true}} className='container-fluid shadow-lg pt-5 pb-4' style={{backgroundColor:'#ffaf3f'}}>
                 <div className='row'>
-                    <div className='col-lg-3 my-3'><img className='shadow-lg rounded-4 placeholder placeholder-wave' style={{width:'18em',height:'18em'}} src={'https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg'} alt={this.props.imgAlt}/></div>
+                    <div className='col-lg-3 my-3'>{this.state.Restaurant_ImgURL==='https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg'?<img className='shadow-lg rounded-4 placeholder placeholder-wave' style={{width:'18em',height:'18em'}} src={this.state.Restaurant_ImgURL} alt={this.props.imgAlt}/>:
+                    <img className='shadow-lg rounded-4' style={{width:'18em',height:'18em',objectFit:'cover',objectPosition:'center'}} src={this.state.Restaurant_ImgURL} alt={this.props.imgAlt}/>}
+                    </div>
                     <div className='col-lg-6 my-3'>
                         {this.state.Restaurant_Name==='PlaceHolder Restaurant'?<div className='placeholder-glow'><h1 className='placeholder' style={this.stylingH1}>{this.state.Restaurant_Name}</h1></div>:<h1 style={this.stylingH1}>{this.state.Restaurant_Name}</h1>}
                         {this.state.Restaurant_Description==='Restaurant Description Placeholder'?<div className='placeholder-glow'><h4 className='placeholder'>{this.state.Restaurant_Description}</h4></div>:<h4>{this.state.Restaurant_Description}</h4>}

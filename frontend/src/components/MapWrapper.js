@@ -9,6 +9,8 @@ import Graphic from  '@arcgis/core/Graphic.js';
 import {solve} from  '@arcgis/core/rest/route.js';
 import RouteParameters from  '@arcgis/core/rest/support/RouteParameters.js';
 import FeatureSet from  '@arcgis/core/rest/support/FeatureSet.js';
+import {initializeApp} from 'firebase/app';
+import {getAnalytics} from 'firebase/analytics';
 
 
 class MapWrapper extends React.Component{

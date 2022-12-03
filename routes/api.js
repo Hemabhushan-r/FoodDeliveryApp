@@ -101,10 +101,14 @@ router.get('/getusercartItems',async (req,res,next)=>{
     res.status(500).json({message:'Something went wrong'})
   }
 });
-router.patch('/updatecartItems',(req,res,next)=>{
+router.patch('/updatecartItems',async (req,res,next)=>{
   const {name,email,cartItems}=req.body;
   try{
-    UserCart.updateOne({name:name,email:email},{$push:{cartItems:{$each:cartItems}}})
+    const usercartitems=await UserCart.updateOne({name:name,email:email},{$push:{cartItems:{$each:cartItems}}})
+    if(!usercartItems){
+      return res.status(404).json({message:'User Cart Not Found'});
+    }
+    res.status(200).json({message:'Your cart data is stored'})
   }
   catch(error){
     res.status(500).json({message:'Soemthing went wrong'})
@@ -114,15 +118,7 @@ router.get('/foodlist', (req, res, next) => {
   // get placeholder
   FoodPrices.find({})
 });
-router.patch('/updatecartItems',(req,res,next)=>{
-  const {name,email,cartItems}=req.body;
-  try{
-    UserCart.updateOne({FoodPrices:FoodPrices,Restuarant:Restuarant},{$push:{cartItems:{$each:cartItems}}})
-  }
-  catch(error){
-    res.status(500).json({message:'Soemthing went wrong'})
-  }
-});
+
 router.post('/foodlist', (req, res, next) => {
   // post placeholder
   if(req.body.action){
@@ -132,15 +128,6 @@ router.post('/foodlist', (req, res, next) => {
   }
   else{
     res.json({error:'The input field is empty',});
-  }
-});
-router.patch('/updatecartItems',(req,res,next)=>{
-  const {name,email,cartItems}=req.body;
-  try{
-    UserCart.updateOne({UserCart:UserCart,Razorpay:Razorpay},{$push:{cartItems:{$each:cartItems}}})
-  }
-  catch(error){
-    res.status(500).json({message:'Soemthing went wrong'})
   }
 });
 router.delete('/foodlist/:id', (req, res, next) => {

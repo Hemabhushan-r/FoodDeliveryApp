@@ -9,6 +9,8 @@ import Graphic from  '@arcgis/core/Graphic.js';
 import {solve} from  '@arcgis/core/rest/route.js';
 import RouteParameters from  '@arcgis/core/rest/support/RouteParameters.js';
 import FeatureSet from  '@arcgis/core/rest/support/FeatureSet.js';
+import {initializeApp} from 'firebase/app';
+import {getAnalytics} from 'firebase/analytics';
 
 
 class MapWrapper extends React.Component{
@@ -17,6 +19,7 @@ class MapWrapper extends React.Component{
         this.state={mapR:undefined}
         this.mapElement=React.createRef()
         console.log("Mounted")
+        this.initCoords=[77.5946,12.9716]
         //this.mapRef=new ol.Map({target:this.mapElement.current});
         //this.mapRef.current=this.state.mapR
         //this.startLayer;
@@ -31,7 +34,16 @@ class MapWrapper extends React.Component{
         // console.log("Map created")
         //     this.mapRef= new ol.Map({target:this.mapElement.current});
         // }
-        
+        if(navigator.geolocation){
+          navigator.geolocation.getCurrentPosition((position)=>{
+            this.initCoords[0]=position.coords.longitude  
+            this.initCoords[1]=position.coords.latitude
+            console.log(position)
+          },
+          (error)=>{
+              console.log(error)
+          })
+      }   
       
           esriConfig.apiKey = "AAPKa80ef46d24ec43c09fe1cadbf8f1cad6Tw4v_az5oO3mlc93UgeMBykmek4n1efQx7lfjPtk0uGjFZohIbgXVSONAAm6ZlWe";
       
@@ -42,8 +54,8 @@ class MapWrapper extends React.Component{
           const view = new MapView({
             container: "map",
             map: map,
-            center: [77.5946,12.9716], //Longitude, latitude
-            zoom: 12
+            center: this.initCoords, //Longitude, latitude
+            zoom: 12  
           });
       
           const routeUrl = "https://route-api.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World";
@@ -51,6 +63,9 @@ class MapWrapper extends React.Component{
           view.on("click", function(event){
       
             if (view.graphics.length === 0) {
+              //12.96672850300421, 77.64835539140198
+              event.mapPoint.latitude=12.96672850300421
+              event.mapPoint.longitude=77.64835539140198
               addGraphic("origin", event.mapPoint);
             } else if (view.graphics.length === 1) {
               addGraphic("destination", event.mapPoint);

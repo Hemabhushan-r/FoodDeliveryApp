@@ -10,20 +10,22 @@ class RestaurantCard extends React.Component{
         this.state={restaurantimgURL:'https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg'}
     }
     componentDidMount(){
-        const client = createClient('563492ad6f91700001000001b1cb8050f4f54b6aaf13e9e51f2323a1');
-        const query = this.props.restaurantName;
+        // const client = createClient('563492ad6f91700001000001b1cb8050f4f54b6aaf13e9e51f2323a1');
+        // const query = this.props.restaurantName;
 
-        setTimeout(client.photos.search({ query, per_page: 1 }).then(photos => {
-            console.log(photos)
-            console.log(photos.photos[0].src.small)
-            this.setState({restaurantimgURL:photos.photos[0].src.original})
-        }),2000);
+        // setTimeout(client.photos.search({ query, per_page: 1 }).then(photos => {
+        //     console.log(photos)
+        //     console.log(photos.photos[0].src.small)
+        //     this.setState({restaurantimgURL:photos.photos[0].src.original})
+        // }),2000);
+        //console.log(this.props.imgSrc)
+        this.setState({restaurantimgURL:this.props.imgSrc})
     }
     render(){
         return(<motion.div initial={{opacity:0.5}} whileInView={{opacity:1}} whileHover={{scale:1.05}} whileTap={{scale:0.95}} viewport={{once:true}} className='col-6 col-lg-3  p-lg-2 px-lg-1 mb-3' style={{display:"inline",float:"none"}}>
-        <Link className='col-6 col-lg-3  p-lg-2 px-lg-1 mb-3' style={{color:'inherit',textDecoration:'none'}} to={this.props.restaurantURL}>
+        <Link className='col-6 col-lg-3  p-lg-2 px-lg-1 mb-3' style={{color:'inherit',textDecoration:'none'}} to={this.props.restaurantURL} state={{imgSrc:this.props.imgSrc}}>
         <div className='card mx-lg-3 rounded-4 shadow' style={{backgroundColor:'#ffaf3f'}}>
-            <img className='rounded-4' src={this.state.restaurantimgURL} alt={this.props.imgAlt}/>
+            <img className='rounded-4' style={{width:'100%',height:'20em',objectFit:'cover',objectPosition:'center'}} src={this.state.restaurantimgURL} alt={this.props.imgAlt}/>
             <div className='card-body'>
                 <div className='card-title fw-bold overflow-hidden'>{this.props.restaurantName}</div>
                 <div className='card-subtitle text-muted mb-2 overflow-hidden'>{this.props.restaurantDesc}</div>

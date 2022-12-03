@@ -25,11 +25,11 @@ class FoodCard extends React.Component{
     componentDidUpdate(prevProps){
         const item={foodName:this.props.foodName,imgSrc:this.props.imgSrc,count:1,price:parseInt(this.props.price)}
         if(this.props.cartItems!=prevProps.cartItems){
-            console.log(this.props.cartItems)
+            //console.log(this.props.cartItems)
             const isFoodInCart=this.props.cartItems?.filter((cartitem)=>{
                 return cartitem.foodName===item.foodName
             })
-            console.log(isFoodInCart)
+            //console.log(isFoodInCart)
             if(isFoodInCart?.length!=undefined){
                 if(isFoodInCart?.length!==0){
                     if(isFoodInCart[0].foodName===item.foodName){

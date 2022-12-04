@@ -42,7 +42,7 @@ class DeliveryStatus extends React.Component{
           const app = initializeApp(firebaseConfig);
           const analytics = getAnalytics(app);
           const db=getFirestore(app);
-          if(this.state.user.result.role==='delivery-personnel'){
+          if(this.state.user.result.role==='customer'){
             setDoc(doc(db,'delivery-updates','p7u1sQ7eJqnf2m5kIgoe'),{
               IsDelivered:false
             },{merge:true})

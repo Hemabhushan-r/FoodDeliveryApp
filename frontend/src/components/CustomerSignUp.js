@@ -11,12 +11,16 @@ import axios from 'axios'
 class CustomerSignUp extends React.Component{
     constructor(props){
         super(props)
-        this.state={formData:{name:'',email:'',password:'',number:'',confirmpassword:'',role:'customer'}}
+        this.state={formData:{name:'',email:'',password:'',number:'',confirmpassword:'',role:'customer'},dropDown:'Sign Up as'}
         this.errorText='Default Error'
         this.styling={backgroundColor:'#fb8c00',animation:'spin 10s ease infinite'}
         this.stylingH={fontFamily:'Cookie'}
         this.stylingImg={objectFit:'none',objectPosition:'center',maxHeight:'200px',width:'100%'}
         this.googleSignUp=React.createRef()
+    }
+    handleRoleDropdown=(event)=>{
+        this.setState({formData:{...this.state.formData,role:event.target.name},dropDown:event.target.value})
+        //console.log(this.state)
     }
     handleError=(errorText)=>{
         this.errorModalText.innerHTML=errorText
@@ -24,7 +28,7 @@ class CustomerSignUp extends React.Component{
     }
     handleSubmit=(event)=>{
         event.preventDefault()
-        axios.post('http://localhost:5000/user/signup',{...this.state.formData}).then(response=>{
+        axios.post('https://fooddeliveryappbackend.onrender.com/user/signup',{...this.state.formData}).then(response=>{
         localStorage.setItem('profile',JSON.stringify({...response.data}))        
         this.props.navigate("/")
         }).catch((error)=>{
@@ -70,13 +74,6 @@ class CustomerSignUp extends React.Component{
     
     render(){
         return(<div className='container-fluid mt-2 pt-5 pb-0 w-100 px-0' style={this.styling}>
-            <style>{`
-            @keyframes spin {
-                 0% { background-position:0% 50%; }
-                 50% { background-position:100% 50%; }
-                 100% { background-position:0% 50%; }
-            }
-        `}</style>
             
             <motion.div initial={{opacity:0.2}}  whileInView={{opacity:1}} viewport={{once:true}} className='mb-2 pb-2'>
                 <h1 className='pt-5' style={this.stylingH}>Few Steps to avail your food at your doorstep</h1>
@@ -111,6 +108,16 @@ class CustomerSignUp extends React.Component{
                             <li className='dropdown-item'>+94</li>
                         </ul>
                         <input type='number' name='number' onChange={this.handleChange} className='form-control' placeholder='Phone No.' aria-label='Phone Number'/>
+                    </div>
+                    <div className='mb-3 d-block dropdown'>
+                        <button className='btn btn-secondary dropdown-toggle' type='button' data-bs-toggle='dropdown' aria-expanded='false'>
+                            {this.state.dropDown}
+                        </button>
+                        <ul className='dropdown-menu'>
+                            <li><button onClick={this.handleRoleDropdown} name='customer' value='Customer' className='dropdown-item' type='button'>Customer</button></li>
+                            <li><button onClick={this.handleRoleDropdown} name='delivery-personnel' value='Delivery Personnel' className='dropdown-item' type='button'>Delivery Personnel</button></li>
+                            <li><button onClick={this.handleRoleDropdown} name='restaurant-admin' value='Restaurant Admin' className='dropdown-item' type='button'>Restaurant Admin</button></li>
+                        </ul>
                     </div>
                     <div className='d-grid px-4'  >
                     <button type='submit'  className='btn btn-secondary' >Create Account</button>

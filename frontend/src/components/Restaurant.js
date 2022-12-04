@@ -142,7 +142,7 @@ class Restaurant extends React.Component{
         
         
         this.setState({Restaurant_ImgURL:imgSrc})
-        const baseAPIURL='http://localhost:5000/api/food_list'
+        const baseAPIURL='https://fooddeliveryappbackend.onrender.com/api/food_list'
         const Restaurant_Name=this.props.location.pathname.split('/')[2].split('-').slice(0,2).join(' ')
         const Rest_Arr=this.props.location.pathname.split('/')[2].split('-').slice(2)
         for(let i=0;i<Rest_Arr.length;i++){
@@ -150,7 +150,7 @@ class Restaurant extends React.Component{
         }
         const Restaurant_Loc=Rest_Arr.join(' ')
         this.setState({Restaurant_Loc:Restaurant_Loc})
-        axios.post('http://localhost:5000/api/rest_foodlist',{Restaurant_URL:this.props.location.pathname}).then(response=>{
+        axios.post('https://fooddeliveryappbackend.onrender.com/api/rest_foodlist',{Restaurant_URL:this.props.location.pathname}).then(response=>{
         console.log(response.data)
         const foodlistlength=response.data.rest_foodlist.Food_Name.length        
         const foodlist_desc=response.data.rest_foodlist.Food_Description.slice(1,response.data.rest_foodlist.Food_Description.length-1).split(",")
@@ -202,10 +202,10 @@ class Restaurant extends React.Component{
                         {this.state.Restaurant_Loc==='Location Placeholder'?<div className='placeholder-glow'><h5 className='placeholder'>{this.state.Restaurant_Loc}</h5></div>:<h5>{this.state.Restaurant_Loc}</h5>}
                         <div className='row p-4'>
                             {this.state.Restaurant_Rating==='Rating Placeholder'?<div className='col-3 placeholder-glow'>
-                            <div className='placeholder'><i className='bi bi-star-fill' style={{color:this.props.rating>4?"green":"#ef6c00"}}></i> {this.state.Restaurant_Rating}                             
+                            <div className='placeholder'><i className='bi bi-star-fill' style={{color:this.state.Restaurant_Rating>4?"green":"#ef6c00"}}></i> {this.state.Restaurant_Rating}                             
                             </div>
                             </div>:<div className='col-3'>
-                            <i className='bi bi-star-fill' style={{color:this.props.rating>4?"green":"#ef6c00"}}></i> {this.state.Restaurant_Rating}                             
+                            <i className='bi bi-star-fill' style={{color:this.state.Restaurant_Rating>4?"green":"#ef6c00"}}></i> {this.state.Restaurant_Rating}                             
                             </div>}
                             <div className='col-1 d-flex'>
                             <div className='vr'></div>
@@ -257,7 +257,7 @@ class Restaurant extends React.Component{
             </motion.div>
             <div className='container-fluid shadow-lg rounded-2' style={{backgroundColor:'#ffaf4f'}}>
             <div className="row">
-            <div key={this.state.mounted} style={{height:'35em',overflowY:'auto'}} className="col-4">
+            <div key={this.state.mounted} style={{height:'35em',overflowY:'auto'}} className="col-4 col-lg-4">
                 <nav id="navbar-foodlist" className="h-100 flex-column align-items-stretch pe-4 border-end border-dark">
                 <nav className="nav nav-pills flex-column">
                     {this.state.Food_Cat?.map((category,index)=>{
@@ -273,7 +273,7 @@ class Restaurant extends React.Component{
                 </nav>
             </div>
 
-            <div className="col-8">
+            <div className="col-8 col-lg-8">
                 <div style={{height:'35em',overflowY:'auto'}} data-bs-spy="scroll" data-bs-target="#navbar-foodlist" data-bs-smooth-scroll="true" id='mainScroll'  tabIndex="0">
                 {/* <FoodCard cartItems={this.props.cartItems}  setcartItems={this.props.setcartItems} updateCartItem={this.props.updateCartItem} price={120}  description={'Exclusive food description right for you'} Id={'item-1'} foodName={'HashBrown'} imgSrc={'https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg'} imgAlt={'img-thumbnail'}/> */}
                 {this.state.filteredfoodlist.length==0?[<FoodCardPlaceholder key='1' foodName={'HashBrown'} imgSrc={'https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg'} imgAlt={'img-thumbnail'}/>,

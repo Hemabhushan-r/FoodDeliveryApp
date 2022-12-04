@@ -3,13 +3,12 @@ import ReactDOM from 'react-dom/client';
 import {BrowserRouter, Routes,Route} from 'react-router-dom';
 import $ from 'jquery';
 import Popper from 'popper.js';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min';
+//import 'bootstrap/dist/css/bootstrap.min.css';
+//import 'bootstrap/dist/js/bootstrap.bundle.min';
 //import 'bootstrap'
 import './index.css';
 import App from './App';
-import './components/CustomerSignUp';
-import CustomerSignUp from './components/CustomerSignUp.js';
+import CustomerSignUp from './components/CustomerSignUp';
 import reportWebVitals from './reportWebVitals';
 import '../node_modules/bootstrap-icons/font/bootstrap-icons.css'
 import DeliveryStatus from './components/DeliveryStatus';

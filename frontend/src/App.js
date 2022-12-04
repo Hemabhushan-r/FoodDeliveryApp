@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+//import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './components/NavBar.js';
 import Navbar from './components/NavBar.js';
 import { GoogleOAuthProvider } from '@react-oauth/google';

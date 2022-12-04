@@ -1,5 +1,5 @@
 import React from 'react'
-import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+//import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter as Router,Switch,Route,Link} from 'react-router-dom';
 import {motion} from 'framer-motion';
 import RestaurantCard from './RestaurantCard';
@@ -34,7 +34,7 @@ class SignIn extends React.Component{
         })
     }
     componentDidMount(){
-        const baseAPIURL='http://localhost:5000/api/restaurant_list'
+        const baseAPIURL='https://fooddeliveryappbackend.onrender.com/api/restaurant_list'
         this.retrieveRestaurants(baseAPIURL)
     }
     render(){
@@ -60,7 +60,7 @@ class SignIn extends React.Component{
                     <RestaurantCardPlaceholder rating={'3.4'} imgSrc={'https://thumbs.dreamstime.com/b/no-thumbnail-image-placeholder-forums-blogs-websites-148010362.jpg'} imgAlt={'food-thumbnail'} priceB={'200 FOR TWO'}/>]
                     :this.state.restaurants.map((restaurant)=>{
                         return(<RestaurantCard key={restaurant.index} restaurantURL={restaurant.Restaurant_URL} restaurantName={restaurant.Restaurant_Name} restaurantDesc={restaurant.Restaurant_Description} rating={restaurant.Restaurant_Rating} imgSrc={restaurant.Restaurant_ImgURL} imgAlt={'food-thumbnail'} priceB={restaurant.Price_B}/>)
-                    })}
+                    }).slice(0,250)}
                 </div>
                 
             </div>

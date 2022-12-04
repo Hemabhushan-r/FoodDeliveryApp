@@ -35,7 +35,7 @@ const signup=async (req,res)=>{
         const result=await Users.create({email:email,password:hashedPassword,name:name,number:number,role:role})
         const token=jwt.sign({email:result.email,id:result._id},'test',{expiresIn:'1h'})
         const userCart=await UserCart.create({name:result.name,email:result.email,cartItems:[]})
-        res.status(200).json({result,token,userCart})
+        res.status(200).json({result,token,cartItems:userCart.cartItems})
     }
     catch(error){
         res.status(500).json({message:'Something went wrong'})

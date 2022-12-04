@@ -37,12 +37,17 @@ class CartFoodCard extends React.Component{
         <div className='card rounded-4 shadow' style={{backgroundColor:'#ffaf3f'}}>
             <div className='row'>
             <div className='col-3 card-img-left'>
-                    <img className='rounded-4 p-2' style={{height:'8em',width:'8em'}} src={this.props.imgSrc} alt={this.props.imgAlt}/>
+                    {/* <img className='rounded-4 p-2' style={{height:'8em',width:'8em'}} src={this.props.imgSrc} alt={this.props.imgAlt}/> */}
                 </div>
                 <div className='col-9'>
                     <div className='card-body'>
                         <div className='card-title h4 d-flex justify-content-between align-items-end'><div className='ms-2 me-auto'></div>{this.props.foodName}</div>
-                        <div className='card-text d-flex justify-content-between align-items-end'><div className='ms-2 me-auto'></div><i onClick={this.handleFooddecrement} className='btn bi bi-dash-square'></i><span className='badge bg-secondary rounded-pill'>x{this.props.count}</span><i onClick={this.handleFoodincrement} className='btn bi bi-plus-square'></i><i className='bi bi-currency-rupee'></i>{this.props.price}</div>
+                        <div className='card-text d-flex justify-content-between align-items-end'>
+                            <div className='ms-2 me-auto'></div>
+                            <i onClick={this.handleFooddecrement} className='btn bi bi-dash-square'></i>
+                            <span className='badge bg-secondary rounded-pill'>x{this.props.count}</span>
+                            <i onClick={this.handleFoodincrement} className='btn bi bi-plus-square'></i>
+                            <i className='bi bi-currency-rupee'></i>{this.props.price}</div>
                         <div className='pt-1 d-flex justify-content-between align-items-end'><div className='ms-2 me-auto'></div><button onClick={this.handleFoodRemove} className='btn btn-danger'>Remove  <i className='bi bi-cart-plus'></i></button></div>
                     </div>
                 </div>

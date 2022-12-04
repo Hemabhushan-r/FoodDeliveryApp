@@ -7,10 +7,13 @@ import esriConfig  from '@arcgis/core/config.js';
 import MapView from '@arcgis/core/views/MapView.js';
 import Graphic from  '@arcgis/core/Graphic.js';
 import {solve} from  '@arcgis/core/rest/route.js';
+import Point from "@arcgis/core/geometry/Point.js";
 import RouteParameters from  '@arcgis/core/rest/support/RouteParameters.js';
 import FeatureSet from  '@arcgis/core/rest/support/FeatureSet.js';
 import {initializeApp} from 'firebase/app';
 import {getAnalytics} from 'firebase/analytics';
+import { getFirestore } from "firebase/firestore";
+import { doc, onSnapshot,setDoc } from "firebase/firestore";
 
 
 class MapWrapper extends React.Component{
@@ -29,15 +32,111 @@ class MapWrapper extends React.Component{
         //this.startCoords;
         //this.endCoords;
     }
+    handleDeliveryPersonCoordsChange=(Coords)=>{
+      if(this.props.user.result.role==='delivery-personnel'){
+        setDoc(doc(db,'location-updates','Ucv5lqFwPBSUCJXeD8HQ'),{
+          source:{
+            location:{
+              lat:Coords.latitude,
+              lng:Coords.longitude
+            }
+          }
+        },{merge:true})
+      }
+    }
     componentDidMount(){
         // if(this.mapElement.current && !this.mapRef){
         // console.log("Map created")
         //     this.mapRef= new ol.Map({target:this.mapElement.current});
         // }
+        const firebaseConfig = {
+          apiKey: "AIzaSyBPwXAaejCV-30S3kWuFW1PvcQhCpp_AUI",
+          authDomain: "fooddeliveryapp-366415.firebaseapp.com",
+          projectId: "fooddeliveryapp-366415",
+          storageBucket: "fooddeliveryapp-366415.appspot.com",
+          messagingSenderId: "146665827801",
+          appId: "1:146665827801:web:03dffdefe24c9a3952fdc8",
+          measurementId: "G-4S945XMC9W"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const db=getFirestore(app);
+        const unsub = onSnapshot(doc(db, "location-updates", "Ucv5lqFwPBSUCJXeD8HQ"), (doc) => {
+          const firebasedoc=doc.data()
+          console.log(firebasedoc)
+           //12.96672850300421, 77.64835539140198 l
+          // const mapPoint = {
+          //   x: 12.96672850300421,
+          //   y: 77.64835539140198,
+          //   spatialReference:{
+          //      wkid: 102100
+          //   }
+          // };
+          // const screenPoint = view.toScreen(mapPoint);
+          // view.when(()=>{
+          //   const newPt=new Point({latitude:12.96672850300421,longitude:77.64835539140198,spatialReference:view.spatialReference})
+          //   console.log(newPt)
+          // })
+          
+          // console.log(screenPoint)
+          view.when(()=>{
+            if (view.graphics.length === 0) {
+            const sourcepoint=new Point({latitude:firebasedoc.source.location.lat,longitude:firebasedoc.source.location.lng,spatialReference:view.spatialReference})
+            console.log(sourcepoint)
+            //const sourcepoint={type:'point',latitude:firebasedoc.source.lat,longitude:firebasedoc.source.lng}
+            addGraphic("origin", sourcepoint);
+          } 
+          if (view.graphics.length === 1) {
+            const destpoint=new Point({latitude:firebasedoc.destination.location.lat,longitude:firebasedoc.destination.location.lng,spatialReference:view.spatialReference})
+            //const destpoint={type:'point',latitude:firebasedoc.source.lat,longitude:firebasedoc.source.lng}
+            addGraphic("destination", destpoint);
+    
+            getRoute(); // Call the route service
+    
+          }
+          if(view.graphics.length>1) {
+            view.graphics.removeAll();
+            if (view.graphics.length === 0) {
+              const sourcepoint=new Point({latitude:firebasedoc.source.location.lat,longitude:firebasedoc.source.location.lng,spatialReference:view.spatialReference})
+              addGraphic("origin", sourcepoint);
+            } 
+            if (view.graphics.length === 1) {
+              const destpoint=new Point({latitude:firebasedoc.destination.location.lat,longitude:firebasedoc.destination.location.lng,spatialReference:view.spatialReference})
+              addGraphic("destination", destpoint);
+      
+              getRoute(); // Call the route service
+      
+            }
+          }
+        })
+          console.log("Current data: ", doc.data());
+      });
         if(navigator.geolocation){
           navigator.geolocation.getCurrentPosition((position)=>{
             this.initCoords[0]=position.coords.longitude  
             this.initCoords[1]=position.coords.latitude
+            if(this.props.user.result.role==='delivery-personnel'){
+              setDoc(doc(db,'location-updates','Ucv5lqFwPBSUCJXeD8HQ'),{
+                source:{
+                  location:{
+                    lat:this.initCoords[1],
+                    lng:this.initCoords[0]
+                  }
+                }
+              },{merge:true})
+            }
+            else if(this.props.user.result.role==='customer'){
+              setDoc(doc(db,'location-updates','Ucv5lqFwPBSUCJXeD8HQ'),{
+                destination:{
+                  location:{
+                    lat:this.initCoords[1],
+                    lng:this.initCoords[0]
+                  }
+                }
+              },{merge:true})
+            }
+            
             console.log(position)
           },
           (error)=>{
@@ -267,6 +366,13 @@ class MapWrapper extends React.Component{
         // }
 
     }
+    // componentDidUpdate(prevProps){
+    //   if(this.props.user?.result.role==='delivery-personnel'){
+    //     if(this.props.deliverypCoords!=prevProps.deliverypCoords){
+    //       this.handleDeliveryPersonCoordsChange(this.props.deliverypCoords)
+    //     }
+    //   }
+    // }
     render(){
         return(<motion.div initial={{opacity:0.2}} whileInView={{opacity:1}} viewport={{once:true}} ref={this.mapElement} style={{height:'28em'}} className='shadow-lg rounded-3 my-4 container map-container' id='map' ></motion.div>)
     }

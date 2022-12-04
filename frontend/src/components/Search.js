@@ -102,7 +102,7 @@ class Search extends React.Component{
         })
     }
     componentDidMount(){
-        const baseAPIURL='http://localhost:5000/api/restaurant_list'
+        const baseAPIURL='https://fooddeliveryappbackend.onrender.com/api/restaurant_list'
             this.retrieveRestaurants(baseAPIURL)
         
     }

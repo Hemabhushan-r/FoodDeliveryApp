@@ -22,7 +22,7 @@ class Cart extends React.Component{
         
     }
     paymentHandler = async (e) => {
-        const API_URL = 'http://localhost:5000/api/'
+        const API_URL = 'https://fooddeliveryappbackend.onrender.com/api/'
         e.preventDefault();
         const orderUrl = `${API_URL}order`+'/'+this.state.cartTotal;
         const response = await axios.get(orderUrl);
@@ -92,7 +92,10 @@ class Cart extends React.Component{
                     <div className='d-flex justify-content-between px-3 py-1'><div>Total:</div><i className='bi bi-currency-rupee'>{this.state.cartTotal}</i></div>
                     
                 </div>
-                <div className='my-2 py-2 '><button onClick={this.paymentHandler} className='btn btn-success'>Pay</button></div>
+                <div className='row'>
+                    <div className='col my-2 py-2 '><button onClick={this.paymentHandler} className='btn btn-success'>Pay Now</button></div>
+                    <div className='col my-2 py-2 '><Link to={'/deliveryStatus'}><button  className='btn btn-success'>Pay through Cash on Delivery</button></Link></div>
+                </div>
             </div>
         </motion.div>)
     }

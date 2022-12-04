@@ -6,6 +6,7 @@ import {motion} from 'framer-motion';
 import withRouter from './withRouter';
 import decode from 'jwt-decode';
 import {GoogleLogin,googleLogout} from '@react-oauth/google';
+import axios from 'axios'
 
 class Navbar extends React.Component{
     constructor(props){
@@ -16,9 +17,14 @@ class Navbar extends React.Component{
 
     }
     logout=()=>{
+        axios.post('https://fooddeliveryappbackend.onrender.com/api/updatecartItems',{name:this.state.user?.result.name
+            ,email:this.state.user?.result.email,cartItems:this.props.cartItems}).then((response)=>{
+                console.log(response)
+            })
         localStorage.removeItem('profile')
         this.props.setisUserLoggedIn(false)
         this.setState({user:null})
+        this.props.navigate('/')
     }
     componentDidMount(){
         //console.log(this.props.setisUserLoggedIn)
@@ -62,7 +68,13 @@ class Navbar extends React.Component{
                     </li>
                     <li className='nav-item active mx-2'>
                     <Link to={'/search'} className='nav-link' href='#' ><motion.div style={{display:"inline-block"}} whileHover={{scale:1.2}} whileTap={{scale:0.95}}><i className='bi bi-search' style={{fontSize:'1.5em'}}></i></motion.div>  Search Restaurants</Link>
+                    
                         {/* {this.state.user?.role=='customer'?<Link to={'/addRestaurant'} className='nav-link' href='#' ><motion.div style={{display:"inline-block"}} whileHover={{scale:1.2}} whileTap={{scale:0.95}}><i className='bi bi-shop' style={{fontSize:'1.5em'}}></i></motion.div>  Search Restaurants</Link>:<Link to={'/addRestaurant'} className='nav-link' href='#' ><motion.div style={{display:"inline-block"}} whileHover={{scale:1.2}} whileTap={{scale:0.95}}><i className='bi bi-shop' style={{fontSize:'1.5em'}}></i></motion.div>  Add Restaurant</Link>} */}
+                    </li>
+                    <li className='nav-item active mx-2'>
+                        {this.state.user?.result.role==='delivery-personnel'?
+                        <Link to={'/deliveryStatus'} className='nav-link' href='#'  ><motion.div style={{display:"inline-block"}} whileHover={{scale:1.2}} whileTap={{scale:0.95}}><i className='bi bi-truck' style={{fontSize:'1.5em'}}></i></motion.div>  Look for orders</Link>
+                        :<></>}
                     </li>
                 </ul>
                 {this.state.user?.result ?<div className='row'>      

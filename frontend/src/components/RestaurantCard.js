@@ -25,7 +25,7 @@ class RestaurantCard extends React.Component{
         return(<motion.div initial={{opacity:0.5}} whileInView={{opacity:1}} whileHover={{scale:1.05}} whileTap={{scale:0.95}} viewport={{once:true}} className='col-6 col-lg-3  p-lg-2 px-lg-1 mb-3' style={{display:"inline",float:"none"}}>
         <Link className='col-6 col-lg-3  p-lg-2 px-lg-1 mb-3' style={{color:'inherit',textDecoration:'none'}} to={this.props.restaurantURL} state={{imgSrc:this.props.imgSrc}}>
         <div className='card mx-lg-3 rounded-4 shadow' style={{backgroundColor:'#ffaf3f'}}>
-            <img className='rounded-4' style={{width:'100%',height:'20em',objectFit:'cover',objectPosition:'center'}} src={this.state.restaurantimgURL} alt={this.props.imgAlt}/>
+            <img className='rounded-4' style={{width:'100%',height:'16em',objectFit:'cover',objectPosition:'center'}} src={this.state.restaurantimgURL} alt={this.props.imgAlt}/>
             <div className='card-body'>
                 <div className='card-title fw-bold overflow-hidden'>{this.props.restaurantName}</div>
                 <div className='card-subtitle text-muted mb-2 overflow-hidden'>{this.props.restaurantDesc}</div>

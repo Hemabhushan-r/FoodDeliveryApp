@@ -9,6 +9,9 @@ const FoodPrices=require('../models/foodlist');
 const Restaurants=require('../models/restaurants');
 const UserCart=require('../models/userCartItems');
 const RestaurantFoodlist=require('../models/restfoodlist');
+const UserCartItemsmodel = require('../models/userCartItems');
+const Users=require('../models/user');
+const ActiveOrders=require('../models/activeorders');
 
 
 router.get("/order/:amount", (req, res) => {
@@ -65,7 +68,42 @@ router.post("/capture/:paymentId", (req, res) => {
   }
 });
 
-
+router.post('/getdeliveryperson',async (req,res,next)=>{
+  const {cust_name,cust_num,cust_email,cartDetails}=req.body
+  try{
+    
+    const delivery_person=await Users.aggregate([{$match:{role:'delivery-personnel'}},{$sample:{size:1}}])
+    const exist_active_order=await ActiveOrders.findOne({cust_name:cust_name,cust_num:cust_num,cust_email:cust_email
+      ,deliveryperson_name:delivery_person[0].name,deliveryperson_num:delivery_person[0].number,deliveryperson_email:delivery_person[0].email,cartDetails:cartDetails})
+    if(!exist_active_order){
+      const active_order=await ActiveOrders.create({cust_name:cust_name,cust_num:cust_num,cust_email:cust_email
+        ,deliveryperson_name:delivery_person[0].name,deliveryperson_num:delivery_person[0].number,deliveryperson_email:delivery_person[0].email,cartDetails:cartDetails})
+    }
+    
+    if(!delivery_person){
+      return res.status(404).json({message:'No Delivery Personnel Found'});
+    }
+    res.status(200).json({name:delivery_person[0].name,email:delivery_person[0].email,number:delivery_person[0].number})
+  }
+  catch(error){
+    console.log(error)
+    res.status(500).json({message:'Something went wrong'})
+  }
+})
+router.post('/getcustomer',async (req,res,next)=>{
+  const {deliveryperson_name,deliveryperson_num,deliveryperson_email}=req.body
+  try{
+    
+    const active_order=await ActiveOrders.findOne({deliveryperson_name:deliveryperson_name,deliveryperson_num:deliveryperson_num,deliveryperson_email:deliveryperson_email})
+    if(!active_order){
+      return res.status(404).json({message:'No Active Order Found'});
+    }
+    res.status(200).json({name:active_order.cust_name,email:active_order.cust_email,number:active_order.cust_num,cartDetails:active_order.cartDetails})
+  }
+  catch(error){
+    res.status(500).json({message:'Something went wrong'})
+  }
+})
 router.get('/restaurant_list',(req,res,next)=>{
   Restaurants.find({})
     .then(data=>{
@@ -101,11 +139,29 @@ router.get('/getusercartItems',async (req,res,next)=>{
     res.status(500).json({message:'Something went wrong'})
   }
 });
-router.patch('/updatecartItems',async (req,res,next)=>{
+router.post('/updatecartItems',async (req,res,next)=>{
   const {name,email,cartItems}=req.body;
+  let arrtoUpdate=[]
   try{
-    const usercartitems=await UserCart.updateOne({name:name,email:email},{$push:{cartItems:{$each:cartItems}}})
-    if(!usercartItems){
+    const existing_usercartitems=await UserCart.findOne({name:name,email:email})
+    if(existing_usercartitems.cartItems.length==0){
+      arrtoUpdate=cartItems
+    }
+    else{
+      for(let i=0;i<existing_usercartitems.cartItems.length;i++){
+        for(let j=0;j<cartItems.length;j++){
+          if(existing_usercartitems.cartItems[i].foodName!==cartItems[j].foodName){
+            arrtoUpdate.push(cartItems[j])
+          }
+        }
+      }
+    }
+    //console.log(cartItems)
+    //console.log(arrtoUpdate)
+    //console.log(existing_usercartitems)
+    const usercartitems=await UserCart.updateOne({name:name,email:email},{$push:{cartItems:{$each:arrtoUpdate}}})
+   // console.log(usercartitems)
+    if(!usercartitems){
       return res.status(404).json({message:'User Cart Not Found'});
     }
     res.status(200).json({message:'Your cart data is stored'})
@@ -114,6 +170,20 @@ router.patch('/updatecartItems',async (req,res,next)=>{
     res.status(500).json({message:'Soemthing went wrong'})
   }
 });
+router.post('/deletecartItems',async (req,res,next)=>{
+  const {name,email}=req.body;
+  try{
+    const usercartitems=await UserCart.updateOne({name:name,email:email},{$set:{cartItems:[]}})
+    const active_order=await ActiveOrders.deleteOne({cust_name:name,cust_email:email})
+    if(!usercartitems){
+      return res.status(404).json({message:'User Cart Not Found'});
+    }
+    res.status(200).json({message:'Your cart data has been deleted'})
+  }
+  catch(error){
+    res.status(500).json({message:'Soemthing went wrong'})
+  }
+})
 router.get('/foodlist', (req, res, next) => {
   // get placeholder
   FoodPrices.find({})

@@ -32,18 +32,7 @@ class MapWrapper extends React.Component{
         //this.startCoords;
         //this.endCoords;
     }
-    handleDeliveryPersonCoordsChange=(Coords)=>{
-      if(this.props.user.result.role==='delivery-personnel'){
-        setDoc(doc(db,'location-updates','Ucv5lqFwPBSUCJXeD8HQ'),{
-          source:{
-            location:{
-              lat:Coords.latitude,
-              lng:Coords.longitude
-            }
-          }
-        },{merge:true})
-      }
-    }
+
     componentDidMount(){
         // if(this.mapElement.current && !this.mapRef){
         // console.log("Map created")
